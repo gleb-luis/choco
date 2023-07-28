@@ -1,0 +1,195 @@
+{% extends "base/app.html" %}
+{% load static %}
+{% load custom_filter %}
+
+{% block head %}
+<title>{{ request.site.sitedetail.title }}｜{{ request.site.name }}</title>
+<meta name="description" content="{{ request.site.sitedetail.description }}">
+<!-- Custom CSS -->
+<link rel="stylesheet" href="{% static 'css/column-index.css' %}">
+<link rel="stylesheet" href="{% static 'css/shop-index.css' %}">
+<link rel="stylesheet" href="{% static 'css/shop-recommend.css' %}">
+<script src="{% static 'js/shop-index.js' %}"></script>
+
+{% endblock %}
+
+{% block contents %}
+
+
+
+<!-- BEGIN Masthead -->
+<header class="masthead text-white text-center">
+
+    <!-- Swiper -->
+    <div class="swiper-container masthead-swiper text-white">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide d-flex align-items-center justify-content-center"
+                style="background-image:url('{% static 'image/img-chocoshop01.jpg' %}')">
+                <div>
+                    <h2>{{ request.site.topsetting.carousel1_title }}</h2>
+                    <p>{{ request.site.topsetting.carousel1_text }}</p>
+                </div>
+            </div>
+            <div class="swiper-slide d-flex align-items-center justify-content-center"
+                style="background-image:url('{% static 'image/img-welcomechocofan.jpg' %}')">
+                <div class="my-auto">
+                    <h2>{{ request.site.topsetting.carousel2_title }}</h2>
+                    <p>{{ request.site.topsetting.carousel2_text }}</p>
+                </div>
+            </div>
+            <div class="swiper-slide d-flex align-items-center justify-content-center"
+                style="background-image:url('{% static 'image/img-chocoshop02.jpg' %}')">
+                <div>
+                    <h2>{{ request.site.topsetting.carousel3_title }}</h2>
+                    <p>{{ request.site.topsetting.carousel3_text }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Arrows -->
+        <div class="swiper-button-next swiper-button-white"></div>
+        <div class="swiper-button-prev swiper-button-white"></div>
+    </div>
+
+    <section class="search-box">
+        <div class="container">
+            <form action="{% url 'shop:search' %}" method="POST" name="searchform" class="search-form">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+
+                            <div class="col-lg-3 col-md-6 col-sm-12 d-flex align-items-center">
+                                <img src="{% static 'image/search.svg' %}" class="w-100 mx-auto" />
+                            </div>
+
+                            <div
+                                class="col-lg-6 col-md-3 col-sm-12 d-flex align-items-center justify-content-center wrap-input">
+                                <input type="text" class="form-control search-slt mx-3" name="freeword"
+                                    placeholder="フリーワード（未入力可）">
+                                <strong>＋</strong>
+                                <select class="form-control search-slt mx-3" name="pref">
+                                    <option value="">都道府県を選択（任意）</option>
+                                    {% for item in pref_list %}
+                                    <option name="selected_pref" value="{{item.name}}">{{ item.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div
+                                class="col-lg-3 col-md-3 col-sm-12 d-flex align-items-center justify-content-center">
+                                <button type="submit" class="btn btn-secondary">検索する</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% csrf_token %}
+            </form>
+        </div>
+    </section>
+
+
+</header>
+
+
+<!-- BEGIN chocolate-shop -->
+<section class="chocolate-shop bg-white text-center">
+    <div class="container">
+
+        <div class="row no-gutters welcome">
+            <div class="col-lg-5 col-12">
+                <!-- <figure style="background-image:url('{% static 'image/img-welcomechocofan.jpg' %}');" class="w-100"></figure> -->
+                <img class="w-100" src="{% static 'image/img-welcomechocofan.jpg' %}">
+            </div>
+            <div class="col-lg-7 col-12">
+                <div class="welcome mx-auto mb-5 mb-lg-0 mb-lg-3 h-100 p-4 text-center">
+                    <div class="d-flex justify-content-center">
+                        <img src="{% static 'image/welcome-chocofan.svg' %}" alt="welcome to Chocofan" />
+                    </div>
+                    <h3 class="typo"><span>チョコレートの世界に</span><span>ようこそ！</span></h3>
+                    <p class="my-3">Choco.fanはBean to Barチョコレートファンのコミュニティです。<br />コミュニティに参加してカカオ産地やチョコレートの作り手を応援しよう。</p>
+                    <a href="{% url 'shop:about_user' %}" class="arw-d">くわしくみる</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="section-header mt-5">
+            <h2>Chocolate Shop</h2>
+            <p>チョコレートショップを探そう！</p>
+        </div>
+
+
+        <div class="row">
+            {% include 'shop/shop_list_part.html' %}
+        </div>
+
+        <div class="d-flex justify-content-center mt-5">
+            <a href="{% url 'shop:shop_list' %}" class="btn btn-primary mx-auto d-block arw-r">もっとみる</a>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- section start here-->
+<section class="chocolate-columns">
+    <div class="container">
+
+        <div class="section-header">
+            <h2>Chocolate Columns</h2>
+            <p>美味しいチョコレートコラム</p>
+        </div>
+
+        <div class="row display-flex">
+            {% include 'column/column_list_part.html' %}
+        </div>
+
+        <div class="d-flex justify-content-center mt-5">
+            <a href="{% url 'column:index' %}" class="btn btn-primary mx-auto d-block arw-r">チョコレートコラムをもっと読む</a>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- BEGIN news section -->
+<section class="news">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-xl-10 mx-auto text-center">
+                <div class="section-header">
+                    <h2>Choco.fan News</h2>
+                    <p>お知らせ</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-10 mx-auto p-5">
+
+                <ul>
+                    {% for item in news_list %}
+                    <li class="row">
+                        <div class="col-md-3">{{ item.public_date.date }}</div>
+                        <div class="col-md-9"><a href="{% url 'company:news_detail' item.pk %}">{{ item.title }}</a>
+                        </div>
+                    </li>
+                    {% empty %}
+                    <p>お知らせはまだありません。</p>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center mt-5">
+            <a href="{% url 'company:news' %}" class="btn btn-primary mx-auto d-block arw-r">お知らせ一覧</a>
+        </div>
+
+    </div>
+</section>
+
+
+{% endblock contents %}
+
+{% block foot %}
+{% endblock %}

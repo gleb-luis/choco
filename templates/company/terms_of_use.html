@@ -1,0 +1,28 @@
+{% extends "base/app.html" %}
+{% load static %}
+
+{% block head %}
+<title>利用規約｜{{ request.site.name }}</title>
+<meta name="description" content="{{ request.site.sitedetail.description }}">
+{% endblock %}
+
+{% block contents %}
+<div class="container no-masthead">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2 class="section-title">利用規約</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {% for item in context %}
+            {{ item.text|safe }}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock contents %}
+
+{% block foot %}
+{% endblock %}

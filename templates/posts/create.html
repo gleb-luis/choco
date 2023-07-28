@@ -1,0 +1,73 @@
+{% extends "base/app.html" %}
+{% load widget_tweaks %}
+
+{% block contents %}
+<section>
+    <div class="container">
+        <br>
+        <div class="row">
+            <div class="col-12">
+                <h2 class="section-title">New Post</h2>
+            </div>
+        </div>
+        <br>
+        <form id="postform" action="{% url 'posts:create' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-sm-3">
+                    <h4>画像</h4>
+                    {{ form.picture }}
+                    {% if form.picture.errors %}
+                    <div class="alert alert-danger">
+                        {{ form.picture.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="col-sm-5">
+                    <h4>メッセージ</h4>
+                    {{ form.text|add_class:'form-control' }}
+                    {% if form.text.errors %}
+                    <div class="alert alert-danger">
+                        {{ form.text.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="col-sm-4">
+                    <h4>原産国</h4>
+                    {{ form.country|add_class:'form-control' }}
+                    {% if form.country.errors %}
+                    <div class="alert alert-danger">
+                        {{ form.country.errors }}
+                    </div>
+                    {% endif %}
+                    <hr>
+                    <h4>テイスト</h4>
+                    {{ form.taste|add_class:'form-control' }}
+                    {% if form.taste.errors %}
+                    <div class="alert alert-danger">
+                        {{ form.taste.errors }}
+                    </div>
+                    {% endif %}
+                    <hr>
+                    <h4>カカオ含有率</h4>
+                    <!-- <div class="form-group">
+                        <label for="formControlRange">Example Range input</label>
+                        <input type="range" class="form-control-range" name="cacao">
+                    </div> -->
+                    {{ form.cacao|add_class:'form-control' }}
+                    {% if form.cacal.errors %}
+                    <div class="alert alert-danger">
+                        {{ form.cacao.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <br>
+            <br><br>
+            <div class="row">
+                <input type="submit" value="投稿" class="btn bg-main">
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock contents %}

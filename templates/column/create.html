@@ -1,0 +1,70 @@
+{% extends "base/app.html" %}
+
+{% block head %}
+<title>コラム投稿｜{{ request.site.name }}</title>
+<meta name="description" content="{{ request.site.sitedetail.description }}">
+{% endblock %}
+
+{% block contents %}
+<div class="container no-masthead">
+    <br>
+    <div class="row">
+        <div class="col-lg-12">
+            <h2 class="section-title">New Column</h2>
+        </div>
+    </div>
+
+    <form id="columnform" action="{% url 'column:create' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="form-group">
+                    <h3>タイトル</h3>
+                    {{ form.title }}
+                    <br><br>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <!-- <div class="imagePreview"></div> -->
+                <div class="form-group">
+                    <h3>サムネイル</h3>
+                    {{ form.thumbnail }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="form-group">
+                    <h3>内容</h3>
+                    <div style="padding: 0!important;">{{ form.content }}</div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <h3>目次有無</h3>
+                    <p>{{ form.is_index }}</p>
+                    <p>H2タグが章タイトルとして認識され、記事本文の上に目次として羅列されます。</p>
+                </div>
+                <br>
+                <div class="form-group">
+                    <h3>下書き</h3>
+                    <p>{{ form.is_draft }}</p>
+                    <p>公開したくない場合はチェックしてください。<br>後から編集し、公開することが可能です。</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <br>
+            <br>
+            <input type="submit" value="投稿" class="btn bg-main"><span>　</span>
+            <a href="javascript:void(0);" onclick="window.history.back();" class="btn btn-outline-secondary">キャンセル</a>
+        </div>
+    </form> 
+    <hr>
+    <div class="row">
+        <div class="col-lg-12">
+            {% include 'column/column_list_part.html' %}
+        </div>
+    </div>
+</div>
+{% endblock contents %}

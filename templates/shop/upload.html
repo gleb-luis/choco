@@ -1,0 +1,17 @@
+{% extends "base/app.html" %}
+{% load static %}
+
+{% block title %}SHOPデータアップロード{% endblock %}
+{% block head %}
+
+{% endblock %}
+
+{% block contents %}
+<h3>アップロード</h3>
+<form action="{% url 'shop:upload' %}" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <input type="file" data-default-file="ファイルを選択してください" name="csv">
+  <button type="submit" class="btn" name="button">アップロード</button>
+</form>
+
+{% endblock contents %}

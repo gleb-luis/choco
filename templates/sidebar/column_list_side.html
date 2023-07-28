@@ -1,0 +1,18 @@
+<!-- begin loop --><li>
+    <div class="row">
+        <div class="col-4 py-2">
+            <a href="{% url 'column:detail' item.pk %}">
+                {% if item.thumbnail %}
+                <figure style="background-image: url('{{ item.thumbnail.url }}');" alt="{{ item.title }}"></figure>
+                {% else %}
+                <figure style="background-image: url('{{ request.site.imagesetting.column_default_thumbnail.url }}');" alt="{{ item.title }}"></figure>
+                {% endif %}
+            </a>
+        </div>
+
+        <div class="col-8 py-2">
+            <a href="{% url 'column:detail' item.pk %}"><h4 class="mb-0">{{ item.title }}</h4></a>
+            <span class="tag tag-view"><i class="far fa-eye"></i> {{ item.views }} Views</span>
+        </div>
+    </div>
+</li><!-- end loop -->

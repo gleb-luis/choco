@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="col-lg-12">
+        <br>
+        <h2 class="section-title">おすすめショップ</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="accordian">
+            <ul>
+                {% for item in recommended_shop_list %}
+                <li>
+                    <div class="image_title">
+                        <a href="{% url 'shop:detail' item.name %}">{{ item.name }}</a>
+                    </div> 
+                    <a href="{% url 'shop:detail' item.name %}">
+                        {% if item.thumbnail %}
+                            <img src="{{ item.thumbnail.url }}"/>
+                        {% else %}
+                            <img src="http://www.ecologytheme.com/theme/eduwise/images/courses/courses_1.jpg">
+                        {% endif %}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>        

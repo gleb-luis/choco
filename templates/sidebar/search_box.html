@@ -1,0 +1,15 @@
+<aside id="search">
+    <h4>ショップ検索</h4>
+<form action="{% url 'shop:search' %}" method="POST" name="searchform" class="search-form">
+    <input type="text" class="form-control search-slt mb-2" name="freeword" placeholder="フリーワード">
+    <select class="form-control search-slt" name="pref">
+        <option value="">都道府県を選択（任意）</option>
+        {% for item in pref_list %}
+        <option name="selected_pref" value="{{item.name}}">{{ item.name }}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <button type="submit" class="btn btn-secondary btn-block">ショップを検索</button>
+    {% csrf_token %}
+</form>
+</aside>

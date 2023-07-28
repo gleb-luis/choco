@@ -1,0 +1,120 @@
+{% extends "base/app.html" %}
+{% load static %}
+
+{% block head %}
+<title>About｜{{ request.site.name }}</title>
+<meta name="description" content="{{ request.site.sitedetail.description|safe }}">
+<!-- Custom CSS -->
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB26pt4ooNsXY40AAiHeqoquSY02ABj5ik&callback=initMap" async defer></script>
+{% endblock %}
+
+{% block contents %}
+
+
+
+<!-- Masthead -->
+<header class="masthead masthead-small text-white text-center d-flex justify-content-center align-items-center" style="background-image: url('/static/image/AdobeStock_1701680021000.jpg');">
+	<h1>会社概要</h1>
+  </header>
+
+  <main class="main-content">
+	  <div class="container">
+
+
+
+
+			  <div class="box mt-5">
+				  <div class="row">
+
+					<div class="col-12">
+						<div class="main-header">
+						<p class="intro">for the future</p>
+						<h2>未来に向けて</h2>
+						</div>
+					</div>
+
+					  <div class="col-lg-5">
+						  <img src="/static/image/img-about-beantobar.jpg" class="w-100" />
+					  </div>
+
+					  <div class="col-lg-7">
+
+
+							<p class="text-justify">海外のみならず、日本全国に広がる「Bean to Bar」チョコレート店舗。
+							厳選されたカカオ豆を選別し、一つずつ丁寧に作られたチョコレートには、生産者のカカオに対する想いや作り手のものづくりへの情熱を感じます。<br />
+							チョコレートファン・コミュニティの運営を通じて、皆様と一緒に環境問題やフェアトレード、SDGs、CSRに取り組み、文化社会の発展と豊かで活力のある地域づくりに貢献して行きたいと考えています。<br />
+							近年、格差社会や環境破壊が問題視されており、深刻な問題となっています。カカオ産地や消費地の環境問題や教育、ものづくりなどの課題に取り組み、より豊かで実りある美しい社会の構築の実現に向けてまい進していきます。<br />
+							「事業を通じて、文化社会の発展に貢献する」ことが私の事業理念です。<br />
+							今後ともより一層のご指導とご鞭撻をいただけましたら幸いです。どうぞ宜しくお願い申し上げます。<br />
+
+							</p>
+
+
+							<p class="text-right">2020年1月<br />
+							株式会社イース<br />
+							代表取締役　塚田麻衣子<br />
+							</p>
+						</div>
+				  </div>
+			  </div>
+
+
+
+			<div class="row justify-content-md-center mb-5">
+
+			<div class="col-12">
+				<div class="main-header">
+				<p class="intro">About Us</p>
+				<h2>運営会社情報</h2>
+				<p>チョコレートファンのための美味しい情報サイト「Choco.fan」は、株式会社イースが運営しています。</p>
+				</div>
+			</div>
+
+			<div class="col-12 col-lg-8">
+				<table class="table mb-5">
+					<tbody>
+					<tr>
+						<th>運営者</th>
+						<td>株式会社イース Choco.fan編集部</td>
+					</tr>
+					<tr>
+						<th>所在地</th>
+						<td>〒113-0033 東京都文京区本郷1-27-8-602</td>
+					</tr>
+					<tr>
+						<th>代表取締役	</th>
+						<td>塚田麻衣子</td>
+					</tr>
+					<tr>
+						<th>運営開始</th>
+						<td>2019年</td>
+					</tr>
+					<tr>
+						<th>事業内容</th>
+						<td>IoT製品開発販売、メディア運営 / フードテック/チョコレート関係</td>
+					</tr>
+					</tbody>
+				</table>
+
+
+					  <div class="text-center mb-3">
+					  <a class="btn btn-secondary arw-r" href="{% url 'company:contact' %}">お問い合わせフォーム</a>
+					  </div>
+			</div>
+
+
+			</div>
+
+
+
+
+	  </div>
+  </main>
+
+
+
+{% endblock contents %}
+
+{% block foot %}
+{% endblock %}

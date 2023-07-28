@@ -1,0 +1,61 @@
+{% extends "base/app.html" %}
+{% load static %}
+
+{% block head %}
+<title>オーナー別ショップ一覧｜{{ request.site.name }}</title>
+<meta name="description" content="{{ request.site.sitedetail.description }}">
+
+<!-- Custom CSS -->
+<link rel="stylesheet" href="{% static 'css/user-box.css' %}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+
+{% block contents %}
+
+<section class="our-webcoderskull padding-lg">
+    <div class="container no-masthead">
+    <div class="row">
+        <div class="col-lg-12">
+            <br>
+            <h2 class="section-title">掲載ショップのオーナー一覧</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        {% for item in owner_list %}
+        <div class="col-lg-3">
+            <div class="card hovercard">
+                <div class="avatar">
+                    {% if item.icon %}
+                    <img class="timeline-icon" src="{{item.icon.url}}">
+                    {% else %}
+                    <P>No Image</P>
+                    {% endif %}
+                </div>
+                <div class="info">
+                    <div class="title">
+                        <a href="{% url 'accounts:detail' item.username %}">{% if item.nickname %}{{item.nickname}}{% else %}{{item.username}}{% endif %}</a>
+                    </div>
+                    <div class="desc">{{ item.profile|safe}}</div>
+                </div>
+                <div class="bottom">
+                    <ul class="box_footer_ul">
+                        {% if item.fb %}
+                        <li><a href="{{ item.fb }}" target="_blank" style="color:#fff; background-color:#3C5A99;"><i class="fab fa-facebook-f"></i></a></li>
+                        {% endif %}
+                        {% if item.tw %}
+                        <li><a href="{{ item.tw }}" target="_blank" style="color:#fff; background-color:#1DA1F2;"><i class="fab fa-twitter"></i></a></li>
+                        {% endif %}
+                        {% if item.insta %}
+                        <li><a href="{{ item.insta }}" target="_blank" style="color:#fff; background-color:#CF2E92;"><i class="fab fa-instagram"></i></a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% if item != request.user %}<a class="btn btn-sm btn-follow" style="margin:10px;" href="{% url 'accounts:follow' item.id %}">Follow</a>{% endif %}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</section>
+{% endblock %}

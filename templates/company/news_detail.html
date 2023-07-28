@@ -1,0 +1,42 @@
+{% extends "base/app.html" %}
+{% load static %}
+
+{% block head %}
+<title>{{object.title}}｜{{ request.site.name }}</title>
+<meta name="description" content="{{ request.site.sitedetail.description }}">
+
+<!-- Custom CSS -->
+<link rel="stylesheet" href="{% static 'css/share-button.css' %}">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,900">
+{% endblock %}
+
+{% block contents %}
+<div class="container no-masthead">
+    <br><br>
+    <div class="row">
+        <div class="col-lg-12">
+            <h2 class="section-title">{{object.title}}</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            {{object.text|safe}}
+            <br>
+            <hr>
+            <small style="text-align: right;">{{object.public_date.date}}</small>
+            <br><br>
+            <ul class="shareList">
+                <li class="shareList__item"><a class="shareList__link icon-twitter" href="https://twitter.com/share?url={{ request.scheme }}://{{ request.get_host }}{% url 'company:news_detail' object.id %}&text={{ object.title }}" target="_blank" title="Twitter"></a></li>
+                <li class="shareList__item"><a class="shareList__link icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ request.scheme }}://{{ request.get_host }}{% url 'company:news_detail' object.id %}" target="_blank" title="Facebook"></a></li>
+                <li class="shareList__item"><a class="shareList__link icon-hatebu" href="http://b.hatena.ne.jp/entry/{{ request.scheme }}://{{ request.get_host }}{% url 'company:news_detail' object.id %}" target="_blank" title="はてなブックマーク"></a></li>
+                <li class="shareList__item"><div class="line-it-button" data-lang="ja" data-type="share-b" data-ver="3" data-url="{{ request.scheme }}://{{ request.get_host }}{% url 'company:news_detail' object.id %}" data-color="default" data-size="small" data-count="false" style="display: none;"></div></li>
+                <script src="https://d.line-scdn.net/r/web/social-plugin/js/thirdparty/loader.min.js" async="async" defer="defer"></script>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock contents %}
+
+{% block foot %}
+{% endblock %}

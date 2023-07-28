@@ -1,0 +1,14 @@
+.container{
+    padding: 2rem;
+}
+.container .img{
+    text-align:center;
+    object-fit: contain;
+}
+.container .details{
+    border-left:3px solid #ded4da;
+}
+.container .details p{
+    font-size:15px;
+    font-weight:bold;
+}

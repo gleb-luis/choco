@@ -1,0 +1,36 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+<link rel="stylesheet" href="{% static 'css/user-box.css' %}">
+<div class="card hovercard">
+    <div class="avatar">
+        
+        {% if object.author.icon %}
+        <a href="{% url 'accounts:detail' object.author %}"><img class="timeline-icon" src="{{object.author.icon.url}}"></a>
+        {% else %}
+        <a href="{% url 'accounts:detail' object.author %}"><img class="timeline-icon" src="https://choco-fan.s3-ap-northeast-1.amazonaws.com/media/image/accounts/%E5%9C%B0%E7%90%83%E5%84%80%EF%BC%92.jpg"></a>
+        {% endif %}
+          
+    </div>
+    <div class="info">
+        <div class="title">
+            <a href="{% url 'accounts:detail' object.author %}">{% if object.author.nickname %}{{object.author.nickname}}{% else %}{{object.author}}{% endif %}</a>
+        </div>
+        <div class="desc">{{ object.author.profile|safe}}</div>
+    </div>
+    <div class="bottom">
+        <ul class="box_footer_ul">
+            {% if object.author.fb %}
+            <li><a href="{{ object.author.fb }}" target="_blank" style="color:#fff; background-color:#3C5A99;"><i class="fab fa-facebook-f"></i></a></li>
+            {% endif %}
+            {% if object.author.tw %}
+            <li><a href="{{ object.author.tw }}" target="_blank" style="color:#fff; background-color:#1DA1F2;"><i class="fab fa-twitter"></i></a></li>
+            {% endif %}
+            {% if object.author.insta %}
+            <li><a href="{{ object.author.insta }}" target="_blank" style="color:#fff; background-color:#CF2E92;"><i class="fab fa-instagram"></i></a></li>
+            {% endif %}
+        </ul>
+    </div>
+    {% if object.author != request.user %}<a class="btn btn-sm btn-follow" style="margin: 10px;" href="{% url 'accounts:follow' object.author.id %}">Follow</a>{% endif %}</p>
+</div>
+
+

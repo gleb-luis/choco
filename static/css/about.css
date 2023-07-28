@@ -1,0 +1,14 @@
+table{
+    width: 100%;
+    border-spacing: 0;
+  }
+  
+  table th{
+    border-bottom: solid 1px #DDD0CC;
+    padding-top: 20px;
+  }
+  
+  table td{
+    border-bottom: solid 1px #DDD0CC;
+    padding-top: 20px;
+  }

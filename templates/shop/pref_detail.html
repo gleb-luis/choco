@@ -1,0 +1,40 @@
+{% extends "base/app.html" %}
+{% load static %}
+{% load custom_filter %}
+
+{% block head %}
+<title>都道府県別ショップ一覧｜{{ request.site.name }}</title>
+<meta name="description" content="{{ request.site.sitedetail.description }}">
+
+<!-- Custom CSS -->
+<link rel="stylesheet" href="{% static 'css/column-index.css' %}">
+<link rel="stylesheet" href="{% static 'css/shop-index.css' %}">
+<script src="{% static 'js/shop-index.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/review.css' %}">
+
+{% endblock %}
+
+{% block contents %}
+
+<section class="chocolate-shop">
+    <div class="container no-masthead">
+        <div class="row">
+            <div class="col-lg-12">
+                <br>
+                <h2 class="section-title">{{ pref_name }}のショップ</h2>
+            </div>
+        </div>
+        <div class="row">
+            {% include 'shop/shop_list_part.html' %}
+        </div>
+    </div>
+    {% include 'base/pagination.html' %}
+</section>
+
+
+
+
+{% endblock contents %}
+
+{% block foot %}
+{% endblock %}

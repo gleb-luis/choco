@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-70706350-28"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-70706350-28');
+  </script>
+
+  <!-- Google Adsense -->
+  <script data-ad-client="ca-pub-2500718545397170" async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="bean to bar">
+
+  <!-- 各ページで設定したらtitleとmetadescriptionはここではなく各ページに託す -->
+  <!-- <title>{{ request.site.sitedetail.title }}</title>
+    <meta name="description" content="{{ request.site.sitedetail.description }}"> -->
+
+  {% load static %}
+  <!-- 必要なライブラリインポート -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Michroma" />
+  <!-- <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext"> -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+    integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+  <!-- オリジナルCSSなど     -->
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+  <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+
+  <!-- Link Swiper's CSS -->
+  <link rel="stylesheet" href="{% static '/vendor/swiper/swiper.min.css' %}">
+  <!-- Chart.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+
+  <!-- Favicon-->
+  <link rel="shortcut icon" href="{% static 'favicon/favicon.ico' %}">
+
+  {% block head %}
+  {% endblock %}
+</head>
+
+<body>
+  <!-- フェイスブックプラグイン -->
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous"
+    src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v4.0&appId=395790591069700&autoLogAppEvents=1"></script>
+
+
+
+  <nav class="navbar navbar-expand-lg bg-light fixed-top" id="mainNav">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'shop:index' %}"><img src="{% static 'image/logo-chocofan.svg' %}"
+          alt="{{ request.site.name }}" /></a>
+
+
+    <!-- Collapse button -->
+    <button class="navbar-toggler animation-button" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+
+        <ul class="navbar-nav">
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'shop:about_user' %}">はじめての方へ</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'shop:shop_list' %}">ショップを探す</a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="{% url 'column:index' %}" id="navbarDropdown" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              チョコレートコラム
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'column:index' %}">オーナーズコラム</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{% url 'column:columnist' %}">コラムニスト一覧</a>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'shop:about_owner' %}">店舗の方へ</a>
+          </li>
+          </ul>
+
+          {% if user.id is None %}
+          <ul class="navbar-nav navbar-login">
+          <li class="btn-login nav-item"><a class="btn btn-secondary"
+              href="{% url 'accounts:signup' %}">ログイン</a></li>
+          <li class="btn-regist nav-item"><a class="btn btn-secondary"
+              href="{% url 'accounts:signup' %}">新規会員登録</a></li>
+            </ul>
+          {% else %}
+
+          <ul class="navbar-nav navbar-user">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              {% if this_user.icon %}
+              <img class="rounded-circle mr-2" src="{{this_user.icon.url}}" style="width: 50px; height: 50px;">
+              {% else %}
+              <img class="timeline-icon mr-2" src="{% static 'image/ico-owneravatar.svg' %}"
+                style="width: 50px; height: 50px;">
+              {% endif %}
+              {{ user.get_username }}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'accounts:detail' user.get_username %}">My Page</a>
+
+              {% if user.is_columnist %}
+              <hr>
+              <a class="dropdown-item" href="{% url 'column:create' %}">コラム執筆</a>
+              <a class="dropdown-item" href="{% url 'column:mycolumn' %}">Myコラム一覧</a>
+              {% endif %}
+              {% if user.is_owner %}
+              <br>
+              <a class="dropdown-item" href="{% url 'shop:create' %}">ショップ登録</a>
+              {% endif %}
+              {% if user.is_staff %}
+              <hr>
+              <a class="dropdown-item" href="/admin" target="_blank">Adminサイトへ</a>
+              {% endif %}
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{% url 'logout' %}">ログアウト</a>
+            </div>
+          </ul>
+
+
+          {% endif %}
+
+      </div>
+    </div>
+  </nav>
+
+
+  <main>
+    <!-- メッセージフレームワーク追加　ここから-->
+    {% if messages %}
+    <div class="container" style="margin-top:1rem;">
+      <div class="message">
+        {% for message in messages %}
+        {% if message.tags == "success" %}
+        <div class="alert alert-success" role="alert">
+          {% elif message.tags == "error" %}
+          <div class="alert alert-danger" role="alert">
+            {% else %}
+            <div class="alert alert-info" role="alert">
+              {% endif %}
+              {{ message }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+        <!-- メッセージフレームワーク追加　ここまで-->
+        {% block contents %}
+        {% endblock %}
+  </main>
+
+  <!-- BEGIN bnr section -->
+  <section class="bnrs">
+    <div class="container">
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-6">
+          <a href="{% url 'shop:about_owner' %}"><img src="{% static 'image/footer-banner-shopowner@2x.png' %}"
+              class="w-100 mb-3 mb-lg-0" /></a>
+        </div>
+        <div class="col-md-6">
+          <a href="{% url 'shop:about_user' %}"><img src="{% static 'image/footer-banner-beginner@2x.png' %}"
+              class="w-100 mb-3 mb-lg-0" /></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+
+      <a href="#top" id="pageTop"><img src="{% static 'image/btn-gototop.svg' %}"></a>
+
+
+      <!--{{request.site.sitedetail.description|safe}}-->
+
+
+      <!--headin5_amrc-->
+      <ul class="inline-list list-unstyled row footer-menu">
+        <li class="col-md-4 col-lg-2"><a href="{% url 'shop:about_user' %}">はじめての方へ</a></li>
+        <li class="col-md-4 col-lg-2"><a href="{% url 'shop:shop_list' %}">ショップを探す</a></li>
+        <li class="col-md-4 col-lg-2"><a href="{% url 'column:index' %}">チョコレートコラム</a>
+
+          <ul>
+            <li><a href="{% url 'column:index' %}">オーナーズコラム</a></li>
+            <li><a href="{% url 'column:columnist' %}">コラムニスト一覧</a></li>
+          </ul>
+
+
+        </li>
+        <li class="col-md-4 col-lg-2"><a href="{% url 'shop:about_owner' %}">店舗の方へ</a></li>
+        <li class="col-md-4 col-lg-2"><a href="{% url 'company:news' %}">お知らせ</a></li>
+        <li class="col-md-4 col-lg-2"><a href="{% url 'company:about' %}">会社概要</a>
+
+          <ul>
+            <li><a href="{% url 'company:contact' %}">お問い合わせ</a></li>
+            <li><a href="{% url 'company:terms_of_use' %}">利用規約</a></li>
+            <li><a href="{% url 'company:privacy_policy' %}">プライバシーポリシー</a></li>
+          </ul>
+
+
+        </li>
+      </ul>
+      <!--footer_ul_amrc ends here-->
+
+
+      <div class="row">
+        <div class="col-12">
+          <a href="http://www.hirata103.com/"><img src="{% static 'image/bnr-hirata103.png' %}"
+              class="pc-only w-100 my-3" title="カカオ豆選別機 ウィノワー【HIRATA103】/ Winnowing Machine for Cacao Beans【HIRATA103】"
+              alt="カカオ豆選別機 ウィノワー【HIRATA103】/ Winnowing Machine for Cacao Beans【HIRATA103】" /><img
+              src="{% static 'image/bnr-hirata103-half.png' %}" class="mb-only w-100 my-3"
+              title="カカオ豆選別機 ウィノワー【HIRATA103】/ Winnowing Machine for Cacao Beans【HIRATA103】"
+              alt="カカオ豆選別機 ウィノワー【HIRATA103】/ Winnowing Machine for Cacao Beans【HIRATA103】" /></a>
+        </div>
+      </div>
+
+      <div class="row d-flex justify-content-center">
+        <div class="col-10 text-center">
+          <a class="navbar-brand" href="#"><img src="{% static 'image/logo-chocofan.svg' %}" alt="choco.fan" /></a>
+          <p class="footer-lead mb-0">チョコレートファンのための美味しい情報サイト</p>
+          <a href="https://www.instagram.com/choco_fan_community/"><img src="{% static 'image/ico-instagram.svg' %}" alt="choco.fan Instagram" class="icon-social"/></a>
+          <p class="copyright mt-2"><span>© {{ request.site.sitedetail.author }} </span> <span>ALL RIGHTS RESERVED</span></p>
+        </div>
+      </div>
+
+
+    </div>
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <!--script src="{% static 'vendor/jquery/jquery.min.js' %}"></script-->
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+  <script src="{% static 'js/scripts.js' %}"></script>
+
+
+  <!-- Swiper JS -->
+  <script src="{% static 'vendor/swiper/swiper.min.js' %}"></script>
+
+  <!-- Initialize Swiper -->
+  <script>
+
+    // masthead
+    var masthead_Swiper = new Swiper('.masthead-swiper', {
+      spaceBetween: 30,
+      effect: 'fade',
+      loop: true,
+      autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    });
+
+    // owners column
+    var shopOrner_Swiper = new Swiper('.owners_swiper', {
+      //slidesPerView: 4,
+      spaceBetween: 30,
+      centeredSlides: true,
+      loop: true,
+      autoplay: {
+        delay: 7500,
+        disableOnInteraction: false,
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+
+      breakpoints: {
+        480: {
+          slidesPerView: 2,
+          spaceBetween: 20,
+        },
+        640: {
+          slidesPerView: 2,
+          spaceBetween: 20,
+        },
+        768: {
+          slidesPerView: 4,
+          spaceBetween: 40,
+        },
+        1024: {
+          slidesPerView: 4,
+          spaceBetween: 50,
+        },
+      }
+
+    });
+  </script>
+
+  <script>
+
+
+    $(function () {
+      var $root = $('html, body');
+      var $btn = $('#pageTop');
+
+      $btn.click(function () {
+        var scroll = $(window).scrollTop();
+        $root.animate({
+          scrollTop: 0
+        },
+          {
+            duration: 1000,
+            easing: 'swing'
+          });
+      });
+    });
+
+    const $dropdown = $(".dropdown");
+    const $dropdownToggle = $(".dropdown-toggle");
+    const $dropdownMenu = $(".dropdown-menu");
+    const showClass = "show";
+
+    $(window).on("load resize", function () {
+      if (this.matchMedia("(min-width: 768px)").matches) {
+        $dropdown.hover(
+          function () {
+            const $this = $(this);
+            $this.addClass(showClass);
+            $this.find($dropdownToggle).attr("aria-expanded", "true");
+            $this.find($dropdownMenu).addClass(showClass);
+          },
+          function () {
+            const $this = $(this);
+            $this.removeClass(showClass);
+            $this.find($dropdownToggle).attr("aria-expanded", "false");
+            $this.find($dropdownMenu).removeClass(showClass);
+          }
+        );
+      } else {
+        $dropdown.off("mouseenter mouseleave");
+      }
+    });
+
+  </script>
+
+</body>
+
+</html>

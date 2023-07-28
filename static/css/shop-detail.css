@@ -1,0 +1,6 @@
+img.shop-image {
+    height: 550px;
+    width: 100%;
+    float: center;
+    object-fit: cover;
+}

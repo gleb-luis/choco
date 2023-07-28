@@ -1,0 +1,140 @@
+{% extends "base/app.html" %}
+{% load static %}
+
+{% block head %}
+<title>About｜{{ request.site.name }}</title>
+<meta name="description" content="{{ request.site.sitedetail.description|safe }}">
+<!-- Custom CSS -->
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB26pt4ooNsXY40AAiHeqoquSY02ABj5ik&callback=initMap" async defer></script>
+{% endblock %}
+
+{% block contents %}
+
+
+<main class="main-content">
+    <div class="container no-masthead">
+        
+            <div class="main-header"> 
+                <p class="mt-4">Choco.fanでは「Bean to Bar」チョコレート文化を広めるために店舗のPRをサポートしています。<br>
+お気軽にお申し込み・お問い合わせください。</p>
+            </div>
+            
+          <div class="row justify-content-md-center">
+          <div class="col-12 col-lg-10 mx-auto mb-3"> 
+          <div class="box">
+               <div class="text-center mb-3">
+                        <h2>店舗情報掲載</h2>
+               </div>
+                    
+                         
+                      <p class="lead">店舗情報の掲載は無料です。ご希望ございましたら、お気軽にお申し付けください。</p>
+                      
+                      <h3>店舗情報掲載</h3>
+                      <p class="text-justify">都道府県別に店舗情報を掲載いたします。チョコレートファン達と交流を深めてください。</p>
+                      <h3>オーナーズコラム掲載</h3>
+                      <p class="text-justify">お店のニュースやイベント、コラムなどの情報をいつでも無料で掲載・発信する事ができます。<br />
+                        価格：無料</p>				  
+                    
+                    <div class="text-center mb-3">
+                    <a class="btn btn-secondary arw-r" href="{% url 'company:contact' %}">ショップオーナー登録</a>
+                    </div>
+          </div>
+          </div>
+          </div>
+
+
+          <div class="row justify-content-md-center">
+          <div class="col-12 col-lg-10 mx-auto mb-3"> 
+          <div class="box">
+               <div class="text-center mb-3">
+                        <h2>記事掲載</h2>
+              </div>
+                    
+                         
+                      <p class="lead">店舗の魅力をもれなく取材して、記事や写真、動画でお届けします。</p>
+                      <p class="text-justify">都記事企画／ 取材／ 撮影／ライティングを含めた記事制作・掲載<br>
+                      ※TOPページに記事を固定表示期間（30日間〜）<br>
+                      ※SNS 各アカウントの投稿／Youtubeチャンネルの投稿／プッシュの配信
+                      </p>		  
+  
+                    
+                    <div class="text-center mb-3">
+                    <a class="btn btn-secondary arw-r" href="{% url 'company:contact' %}">お問い合わせ</a>
+                    </div>
+          </div>
+          </div>
+          </div>
+
+
+  
+          <div class="row justify-content-md-center">
+          <div class="col-12 col-lg-10 mx-auto mb-3"> 
+          <div class="box">
+               <div class="text-center mb-3">
+                        <h2>店舗集客企画</h2>
+                    </div>
+                         
+                      <p class="lead">Lineやショッピングサイト、WEBサイト構築、各種SNSによる集客プランをご提案します。</p>	  
+                    
+                    <div class="col-lg-12 text-center mb-3">
+                    <a class="btn btn-secondary arw-r" href="{% url 'company:contact' %}">お問い合わせ</a>
+                    </div>
+          </div>
+          </div>
+          </div>
+
+
+          <div class="row justify-content-md-center">
+          <div class="col-12 col-lg-10 mx-auto mb-3"> 
+          <div class="box">
+               <div class="text-center mb-3">
+                        <h2>コラボ企画</h2>
+                    </div>
+                    
+                         
+                      <p class="lead">分野の違うけどベストマッチ。料理人やシェフ、パティシエ、ソムリエ、バリスタ 、アーティストとコラボ商品の開発やコラボイベントを企画します。</p>	  
+                    
+                    <div class="col-lg-12 text-center mb-3">
+                    <a class="btn btn-secondary arw-r" href="{% url 'company:contact' %}">お問い合わせ</a>
+                    </div>
+          </div>
+          </div>
+          </div>
+
+
+          <div class="row justify-content-md-center">
+          <div class="col-12 col-lg-10 mx-auto mb-3"> 
+          <div class="box">
+               <div class="text-center mb-3">
+                        <h2>ツアー企画</h2>
+                    </div>
+                         
+                      <p class="lead">カカオ産地ツアー、チョコレート食べ歩きツアー、サロンドショコラなどのイベントツアーなど、国内・海外の各種ツアーを企画しアテンドいたします。</p>	  
+                    
+                    <div class="col-lg-12 text-center mb-3">
+                    <a class="btn btn-secondary arw-r" href="{% url 'company:contact' %}">お問い合わせ</a>
+                    </div>
+          </div>
+          </div>
+          </div>
+            
+            
+            <div class="row mt-5">
+                    <div class="col-12 col-lg-10 mx-auto text-center mb-3">
+                        <h2>お気軽にお問い合わせください</h2>
+                        <p>その他、Choco.fan編集部に「こんな企画をお願いしたい！」「こんな企画できないかな？」などなど、よろず相談がありましたら、いつでもお気軽にお問い合わせください。</p>
+                    </div>
+                
+                    <div class="col-lg-12 text-center mb-3">
+                    <a class="btn btn-secondary arw-r" href="{% url 'company:contact' %}">お問い合わせ</a>
+                    </div>
+            </div>		   
+    </div>
+</main>
+
+
+{% endblock contents %}
+
+{% block foot %}
+{% endblock %}

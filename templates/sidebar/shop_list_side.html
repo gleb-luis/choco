@@ -1,0 +1,22 @@
+<!-- begin loop --><li>
+<div class="row">
+<div class="col-4 py-2">
+    {% if item.thumbnail %}
+    <a href="{% url 'shop:detail' item.name %}">
+        <figure style="background-image: url('{{ item.thumbnail.url }}');" alt="{{ item.name }}"></figure>
+    </a>
+    {% else %}
+    <a href="{% url 'shop:detail' item.name %}"></a>
+        <figure style="background-image: url('{{ request.site.imagesetting.shop_default_thumbnail.url }}')";></figure>
+    </a>
+    {% endif %}
+</div>
+<div class="col-8 py-2">
+<h4 class="mb-0"><a href="{% url 'shop:detail' item.name %}" class="stretched-link">{{ item.name }}</a></h4>
+{% for tag in object.tag.all %}
+<span class="badge badge-primary">{{tag.name}}</span>
+{% endfor %}
+</div>
+</div>
+</li><!-- end loop -->
+

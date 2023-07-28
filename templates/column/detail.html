@@ -1,0 +1,231 @@
+{% extends "base/app.html" %}
+{% load static %}
+
+{% block head %}
+<title>{{ object.title }}｜{{ request.site.name }}</title>
+<meta name="description" content="{{ request.site.sitedetail.description }}">
+
+<!-- Custom CSS -->
+<link rel="stylesheet" href="{% static 'css/share-button.css' %}">
+<link rel="stylesheet" href="{% static 'css/column-detail.css' %}">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,900">
+
+{% endblock %}
+
+{% block contents %}
+<section>
+    <div class="container no-masthead">
+
+        <div class="row">
+            <div class="col-12 col-lg-8">
+
+                <h1 class="section-title">{{ object.title }}</h1>
+
+                {% if object.author == request.user %}
+                <!-- コラム編集 -->
+                <div class="edit-column p-2 mb-3 text-center">
+                    <div class="row d-flex">
+                        <div class="col-12 col-md-6"><p class="info">あなたはこのコラムの執筆者です</p></div>
+                        <div class="col-12 col-md-6">
+                            <a class="btn btn-primary btn-sm" href="{% url 'column:update' object.pk %}">コラムを編集する</a>
+                            <a class="btn btn-danger btn-sm" href="{% url 'column:delete' object.pk %}">コラムを削除する</a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if object.thumbnail %}
+                    <img src="{{ object.thumbnail.url }}" class="entry-eyecatch">
+                {% else %}
+                    <img src="{{ request.site.imagesetting.column_default_thumbnail.url }}" class="entry-eyecatch">
+                {% endif %}
+
+                <!-- 目次を出す -->
+                {% if object.is_index %}
+                <div class="mokuji">
+                    <h4 class="text-center">目次</h4>
+                    <div id="toc"></div>
+                </div>
+                {% endif %}
+
+                <div class="entry-content">
+                    {{ object.content|safe }}
+                </div>
+
+                <script>
+                    {{ object.content_script|safe }}
+                </script>
+                <br>
+                <p class="text-right"><small>投稿日：{{ object.created_at.date }}
+                    {% if object.created_at < object.updated_at %}
+                    （更新日：{{ object.updated_at.date }}）{% endif %}
+                </small></p>
+
+                <aside class="share_box">
+                    <h5>気に入ったらシェアをお願いします！</h5>
+                    <ul class="shareList">
+                        <li class="shareList__item"><a class="shareList__link icon-twitter" href="https://twitter.com/share?url={{ request.scheme }}://{{ request.get_host }}{% url 'column:detail' object.id %}&text={{ object.title }}" target="_blank" title="Twitter"></a></li>
+                        <li class="shareList__item"><a class="shareList__link icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ request.scheme }}://{{ request.get_host }}{% url 'column:detail' object.id %}" target="_blank" title="Facebook"></a></li>
+                        <li class="shareList__item"><a class="shareList__link icon-hatebu" href="http://b.hatena.ne.jp/entry/{{ request.scheme }}://{{ request.get_host }}{% url 'column:detail' object.id %}" target="_blank" title="はてなブックマーク"></a></li>
+                        <li class="shareList__item"><div class="line-it-button" data-lang="ja" data-type="share-b" data-ver="3" data-url="{{ request.scheme }}://{{ request.get_host }}{% url 'column:detail' object.id %}" data-color="default" data-size="small" data-count="false" style="display: none;"></div></li>
+                        <script src="https://d.line-scdn.net/r/web/social-plugin/js/thirdparty/loader.min.js" async="async" defer="defer"></script>
+                    </ul>
+
+                </aside>
+
+                <aside class="columnist_box">
+                    <h3 class="line">この記事を書いた人</h3>
+
+                    <div class="row">
+                        <div class="col-12 col-md-3 avatar text-center">
+                            {% if object.author.icon %}
+                            <a href="{% url 'accounts:detail' object.author %}"><img src="{{object.author.icon.url}}"></a>
+                            {% else %}
+                            <a href="{% url 'accounts:detail' object.author %}"><img src="https://choco-fan.s3-ap-northeast-1.amazonaws.com/media/image/accounts/chocofan.png"></a>
+                            {% endif %}
+                        </div>
+                        <div class="col-12 col-md-9">
+                            <h4 class="mb-0"><a href="{% url 'accounts:detail' object.author %}">{% if object.author.nickname %}{{object.author.nickname}}{% else %}{{object.author}}{% endif %}</a></h4>
+                            <p class="mb-1">{{ object.author.profile|safe}}</p>
+                            <ul class="d-flex sns-list">
+                            {% if object.author.fb %}
+                            <li><a href="{{ object.author.fb }}" target="_blank" style="color:#fff; background-color:#3C5A99;"><i class="fab fa-facebook-f"></i></a></li>
+                            {% endif %}
+                            {% if object.author.tw %}
+                            <li><a href="{{ object.author.tw }}" target="_blank" style="color:#fff; background-color:#1DA1F2;"><i class="fab fa-twitter"></i></a></li>
+                            {% endif %}
+                            {% if object.author.insta %}
+                            <li><a href="{{ object.author.insta }}" target="_blank" style="color:#fff; background-color:#CF2E92;"><i class="fab fa-instagram"></i></a></li>
+                            {% endif %}
+                            </ul>
+                            {% if object.author != request.user %}<a class="btn btn-primary btn-sm" href="{% url 'accounts:follow' object.author.id %}">フォローする</a>{% endif %}
+                        </div>
+                    </div>
+
+                    {% if object.author == request.user %}
+                    <!-- コラム編集 -->
+                    <div class="edit-column p-2 text-center">
+                        <div class="row d-flex">
+                            <div class="col-12 col-md-6"><p class="info">あなたはこのコラムの執筆者です</p></div>
+                            <div class="col-12 col-md-6">
+                                <a class="btn btn-primary btn-sm" href="{% url 'column:update' object.pk %}">コラムを編集する</a>
+                                <a class="btn btn-danger btn-sm" href="{% url 'column:delete' object.pk %}">コラムを削除する</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                </aside>
+
+                <aside>
+                    <h3 class="line">この人のコラム</h3>
+                    {% for item in users_column_list %}
+                        <ul class="column_list">
+
+                        <!-- begin loop --><li>
+                            <div class="row">
+                                <div class="col-4 col-lg-2 py-2">
+                                    <a href="{% url 'column:detail' item.pk %}">
+                                        {% if item.thumbnail %}
+                                        <figure style="background-image: url('{{ item.thumbnail.url }}');" alt="{{ item.title }}"></figure>
+                                        {% else %}
+                                        <figure style="background-image: url('{{ request.site.imagesetting.column_default_thumbnail.url }}');" alt="{{ item.title }}"></figure>
+                                        {% endif %}
+                                    </a>
+                                </div>
+
+                                <div class="col-8 col-lg-10 py-2">
+                                    <a href="{% url 'column:detail' item.pk %}"><h4 class="mb-0">{{ item.title }}</h4></a>
+                                    <span class="tag tag-view"><i class="far fa-eye"></i> {{ item.views }} Views</span>
+                                </div>
+                            </div>
+                        </li><!-- end loop -->
+
+
+                        </ul>
+                    {% endfor %}
+                </aside>
+
+            </div>
+
+            <!-- サイドバー -->
+            <div class="col-lg-4 sidebar px-4">
+
+                {% include 'sidebar/search_box.html' %}
+
+                <aside>
+                    <h3 class="line">人気のコラム</h3>
+                    {% for item in popular_column_list %}
+                    <ul class="column_list">
+                        {% include 'sidebar/column_list_side.html' %}
+                        </ul>
+                    {% endfor %}
+                </aside>
+
+
+                <figure class="ad">
+                    {{ request.site.advertisement.amazon_ad_side1|safe }}
+                </figure>
+
+                <figure class="ad">
+                    {{ request.site.advertisement.rakuten_ad_side1|safe }}
+                </figure>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- 見出しを出すためのJavascript -->
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        var contentsList = document.getElementById('toc'); // 目次を追加する先(table of contents)
+        var div = document.createElement('div'); // 作成する目次のコンテナ要素
+        // .entry-content配下のh2、h3要素を全て取得する
+        var matches = document.querySelectorAll('.entry-content h2, .entry-content h3');
+        // 取得した見出しタグ要素の数だけ以下の操作を繰り返す
+        matches.forEach(function (value, i) {
+            // 見出しタグ要素のidを取得し空の場合は内容をidにする
+            var id = value.id;
+            if(id === '') {
+                id = value.textContent;
+                value.id = id;
+            }
+            // 要素がh2タグの場合
+            if(value.tagName === 'H2') {
+                var ul = document.createElement('ul');
+                var li = document.createElement('li');
+                var a = document.createElement('a');
+                // 追加する<ul><li><a>タイトル</a></li></ul>を準備する
+                a.innerHTML = value.textContent;
+                a.href = '#' + value.id;
+                li.appendChild(a)
+                ul.appendChild(li);
+                // コンテナ要素である<div>の中に要素を追加する
+                div.appendChild(ul);
+            }
+            // 要素がh3タグの場合
+            if(value.tagName === 'H3') {
+                var ul = document.createElement('ul');
+                var li = document.createElement('li');
+                var a = document.createElement('a');
+                // コンテナ要素である<div>の中から最後の<li>を取得する。
+                var lastUl = div.lastElementChild;
+                var lastLi = lastUl.lastElementChild;
+                // 追加する<ul><li><a>タイトル</a></li></ul>を準備する
+                a.innerHTML = value.textContent;
+                a.href = '#' + value.id;
+                li.appendChild(a)
+                ul.appendChild(li);
+                // 最後の<li>の中に要素を追加する
+                lastLi.appendChild(ul);
+            }
+        });
+        // 最後に画面にレンダリング
+        contentsList.appendChild(div);
+    });
+</script>
+
+{% endblock contents %}

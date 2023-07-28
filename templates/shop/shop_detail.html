@@ -1,0 +1,515 @@
+{% extends "base/app.html" %}
+{% load static %}
+
+{% block head %}
+<title>{{ object.name }}｜{{ request.site.name }}</title>
+<meta name="description" content="{{ request.site.sitedetail.description }}">
+
+<!-- Custom CSS -->
+<link rel="stylesheet" href="{% static 'css/share-button.css' %}">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,900">
+<link rel="stylesheet" href="{% static 'css/shop-detail.css' %}">
+<link rel="stylesheet" href="{% static 'css/review.css' %}">
+<link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+
+<!-- HTML記述中に書かかないと地図が表示されない -->
+<link rel="stylesheet" href="{% static 'js/gmap.js' %}">
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB26pt4ooNsXY40AAiHeqoquSY02ABj5ik&callback=initMap" async
+    defer></script>
+{% endblock %}
+
+{% block contents %}
+
+
+
+<!-- ShopHeader -->
+<header class="shop-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-8">
+                <h1>{{ object.name }}</h1>
+                {% for tag in object.tag.all %}
+                <span class="badge badge-primary">{{tag.name}}</span>
+                {% endfor %}
+
+                {% if not object.get_review_count == 0 %}
+                <div class="rating-wrap">
+                    <div class="star-rating">
+                        <div class="star-rating-front" style="width: {{ average_rate }}%;">★★★★★</div>
+                        <div class="star-rating-back">★★★★★</div>
+                    </div>
+                    <span class="vote-amount">{{ object.get_average_score|floatformat:1 }}</span>
+                    <a href="#nav-review" data-toggle="tab" aria-controls="nav-review" aria-selected="false"
+                        id="nav-review-tab"><img
+                            src="{% static 'image/ico-comment.svg' %}" /><strong>{{ object.get_review_count }}</strong>件のレビューコメント</a>
+                </div>
+                <br>
+                {% else %}
+                <p class="text-left">まだレビューはありません。<a href="#add-review">最初のレビューをお願いします！</a></p>
+                {% endif %}
+
+            </div>
+            <div class="col-12 col-lg-4 text-center">
+
+                <div class="fav-box">
+                    <ul class="list-inline">
+                        <li class="list-inline-item px-4"><span class="number">{{ object.get_like_count }}</span>お気に入り
+                        </li>
+                        <li class="list-inline-item px-4"><span class="number">{{ object.views }}</span>views</li>
+                    </ul>
+                    {% if user.is_authenticated %}
+                    {% if like_shop %}
+                    <a href="{% url 'shop:like_shop_delete' object.name %}"
+                        class="btn btn-lg btn-block mr-2 fav-btn"><img
+                            src="{% static 'image/ico-heart-br.svg' %}" />お気に入りから削除</a>
+                    {% else %}
+                    <a href="{% url 'shop:like_shop' object.name %}" class="btn btn-lg btn-block mr-2 fav-btn"><img
+                            src="{% static 'image/ico-heart-br.svg' %}" />お気に入り</a>
+                    {% endif %}
+                    {% endif %}
+
+                </div>
+
+
+            </div>
+        </div>
+</header>
+
+
+<main class="main-content shop_detail">
+    <div class="container">
+        <section class="p-0">
+            <div class="row">
+
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-shoptop-tab" data-toggle="tab" href="#nav-shoptop"
+                            role="tab" aria-controls="nav-shoptop" aria-selected="true">
+                            <img src="{% static 'image/ico-shop.svg' %}">店舗トップ</a>
+                        <a class="nav-item nav-link" id="nav-ownerscolumn-tab" data-toggle="tab"
+                            href="#nav-ownerscolumn" role="tab" aria-controls="nav-ownerscolumn" aria-selected="false">
+                            <img src="{% static 'image/ico-ownerscolumn.svg' %}">オーナーズコラム</a>
+                        <a class="nav-item nav-link" id="nav-review-tab" data-toggle="tab" href="#nav-review" role="tab"
+                            aria-controls="nav-review" aria-selected="false">
+                            <img src="{% static 'image/ico-review.svg' %}">レビューコメント</a>
+                    </div>
+                </nav>
+
+                <div class="col-lg-8">
+                    <div class="tab-content" id="nav-tabContent">
+
+                        <!-- tab-1 nav-shoptop -->
+                        <div class="tab-pane fade show active" id="nav-shoptop" role="tabpanel"
+                            aria-labelledby="nav-shoptop-tab">
+
+                            <article>
+
+                                <div class="row">
+                                    <!-- ショップスライドショーを格納するrow-->
+                                    <div class="col-12">
+                                        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                                            <div class="carousel-inner">
+                                                <div class="carousel-item active">
+                                                    {% if object.thumbnail %}
+                                                    <img src="{{ object.thumbnail.url }}"
+                                                        class="d-block w-100 shop-image" style="height: 550px;">
+                                                    {% else %}
+                                                    <img src="{{ request.site.imagesetting.shop_default_thumbnail.url }}"
+                                                        class="d-block w-100 shop-image" style="height: 550px;">
+                                                    {% endif %}
+                                                </div>
+                                                <div class="carousel-item">
+                                                    {% if object.thumbnail2 %}
+                                                    <img src="{{ object.thumbnail2.url }}"
+                                                        class="d-block w-100 shop-image" style="height: 550px;">
+                                                    {% else %}
+                                                    <img src="{{ request.site.imagesetting.shop_default_thumbnail2.url }}"
+                                                        class="d-block w-100 shop-image" style="height: 550px;">
+                                                    {% endif %}
+                                                </div>
+                                                <div class="carousel-item">
+                                                    {% if object.thumbnail3 %}
+                                                    <img src="{{ object.thumbnail3.url }}"
+                                                        class="d-block w-100 shop-image" style="height: 550px;">
+                                                    {% else %}
+                                                    <img src="{{ request.site.imagesetting.shop_default_thumbnail3.url }}"
+                                                        class="d-block w-100 shop-image" style="height: 550px;">
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <a class="carousel-control-prev" href="#carouselExampleControls"
+                                                role="button" data-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                            <a class="carousel-control-next" href="#carouselExampleControls"
+                                                role="button" data-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                                <p class="text-justify">{{ object.content|safe }}</p>
+                            </article>
+
+                            <article class="owners_column bg-white">
+                                <h3>「{{ object.name }}」オーナーズコラム</h3>
+
+                                <div class="row">
+                                    {% for item in owners_column|slice:':2' %}
+                                    <div class="col-12 col-md-6 mb-3">
+                                        <div class="card">
+                                            <div class="card-image d-flex align-items-end"
+                                                style="background-image: url('{% static 'image/img-welcomechocofan.jpg' %}')">
+                                                <h2 class="text-white py-2 px-4 mt-2">{{ item.title }}</h2>
+                                            </div>
+
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-3 balloon5">
+                                                        {% if item.author.icon %}
+                                                        <div class="faceicon">
+                                                            <img src="{{ item.author.icon.url }}"
+                                                                class="rounded-circle">
+                                                        </div>
+                                                        {% else %}
+                                                        <img src="{% static 'image/avataaars.svg' %}"
+                                                            class="rounded-circle">
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="col-9">
+                                                        <br>
+                                                        <h4><span
+                                                                class="shop-name">{{ object.name }}</span>{{ object.owner }}
+                                                        </h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+
+                                <p class="text-right mt-2"><a href="#nav-ownerscolumn" class="arw-r"
+                                        data-toggle="tab">すべてのオーナーズコラムを読む</a></p>
+                            </article>
+
+                            <article class="review">
+                                {% include 'shop/shop_detail_review.html' %}
+                            </article>
+
+                            <article>
+                                <h3>「{{ object.name }}」の基本情報・アクセス</h3>
+
+                                <!-- ショップ情報を格納する　-->
+                                <table class="table">
+                                    <tr>
+                                        <th>店舗名</th>
+                                        <td>{{ object.name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>住所・地図</th>
+                                        <td id="address">〒{{ object.zipcode }}<br />
+                                            {{ object.pref }}{{ object.address }}
+                                            <div id="map" style="width: 100%; height: 300px;"></div>
+                                            <script>
+                                                function initMap() {
+
+                                                    var target = document.getElementById('map'); //マップを表示する要素を指定
+                                                    var address = document.getElementById('address').textContent;
+                                                    var geocoder = new google.maps.Geocoder();
+
+                                                    geocoder.geocode({ address: address }, function (results, status) {
+                                                        if (status === 'OK' && results[0]) {
+
+                                                            console.log(results[0].geometry.location);
+
+                                                            var map = new google.maps.Map(target, {
+                                                                center: results[0].geometry.location,
+                                                                zoom: 18
+                                                            });
+
+                                                            var marker = new google.maps.Marker({
+                                                                position: results[0].geometry.location,
+                                                                map: map,
+                                                                animation: google.maps.Animation.DROP
+                                                            });
+
+                                                        } else {
+                                                            //住所が存在しない場合の処理
+                                                            alert('住所が正しくないか存在しません。');
+                                                            target.style.display = 'none';
+                                                        }
+                                                    });
+                                                }
+                                            </script>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>電話</th>
+                                        <td>{{ object.shop_tel }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>公式サイト</th>
+                                        <td><a href="{{ object.shop_url }}" target="_blank">{{ object.shop_url }}</a>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Facebook</th>
+                                        <td><a href="{{ object.shop_fb }}"
+                                                target="_blank">{{ object.shop_fb }}</a></td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Instagram</th>
+                                        <td><a href="{{ object.shop_insta }}"
+                                                target="_blank">{{ object.shop_insta }}</a></td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Twitter</th>
+                                        <td><a href="{{ object.shop_tw }}" target="_blank">{{ object.shop_tw }}</a></td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>LINE公式アカウント</th>
+                                        <td>
+                                        <div class="line-it-button" data-lang="ja" data-type="friend" data-lineid="{{object.shop_line}}" style="display: none;"></div>
+                                        <script src="https://d.line-scdn.net/r/web/social-plugin/js/thirdparty/loader.min.js" async="async" defer="defer"></script>
+                                        </td>
+                                        <!-- <td><a href="https://twitter.com/xxxx">
+                                                <img src="{% static 'image/btn-line_add_friends.png' %}" width="120">
+                                            </a></td> -->
+                                    </tr>
+
+                                </table>
+                            </article>
+                        </div>
+
+                        <!-- tab-2 -->
+                        <div class="tab-pane fade" id="nav-ownerscolumn" role="tabpanel"
+                            aria-labelledby="nav-ownerscolumn-tab">
+
+                            <article class="owners_column bg-white">
+                                <h3>「{{ object.name }}」オーナーズコラム</h3>
+
+                                <div class="row">
+
+                                    <!-- BEGIN loop -->
+                                    {% for item in owners_column %}
+                                    <div class="col-12 col-md-6 mb-3">
+                                        <div class="card">
+                                            <div class="card-image d-flex align-items-end"
+                                                style="background-image: url('{% static 'image/img-welcomechocofan.jpg' %}')">
+                                                <h2 class="text-white py-2 px-4 mt-2">{{ item.title }}</h2>
+                                            </div>
+
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-3 balloon5">
+                                                        {% if item.author.icon %}
+                                                        <div class="faceicon">
+                                                            <img src="{{ item.author.icon.url }}"
+                                                                class="rounded-circle">
+                                                        </div>
+                                                        {% else %}
+                                                        <img src="{% static 'image/avataaars.svg' %}"
+                                                            class="rounded-circle">
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="col-9">
+                                                        <br>
+                                                        <h4><span
+                                                                class="shop-name">{{ object.name }}</span>{{ object.owner }}
+                                                        </h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- ENDloop -->
+                                    {% endfor %}
+
+                                </div>
+
+                            </article>
+
+                        </div>
+
+                        <!-- tab-3 -->
+                        <div class="tab-pane fade" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">
+
+                            <article class="review">
+
+                                {% if not object.get_review_count == 0 %}
+                                <div class="rating-wrap">
+                                    <div class="star-rating">
+                                        <div class="star-rating-front" style="width: {{ average_rate }}%;">★★★★★</div>
+                                        <div class="star-rating-back">★★★★★</div>
+                                    </div>
+                                    <span class="vote-amount">{{ object.get_average_score|floatformat:1 }}</span>
+                                </div>
+                                <br>
+                                {% else %}
+                                <p class="text-left">まだレビューはありません。<a href="#add-review">最初のレビューをお願いします！</a></p>
+                                {% endif %}
+
+                                {% include 'shop/shop_detail_review.html' %}
+
+                            </article>
+                        </div><!-- /tab -->
+
+                        <!--　タブ下 -->
+                        <ul class="shareList">
+                            <li class="shareList__item"><a class="shareList__link icon-twitter"
+                                    href="https://twitter.com/share?url={{ request.scheme }}://{{ request.get_host }}{% url 'shop:detail' object.id %}&text={{ object.name }}"
+                                    target="_blank" title="Twitter"></a></li>
+                            <li class="shareList__item"><a class="shareList__link icon-facebook"
+                                    href="https://www.facebook.com/sharer/sharer.php?u={{ request.scheme }}://{{ request.get_host }}{% url 'shop:detail' object.id %}"
+                                    target="_blank" title="Facebook"></a></li>
+                            <li class="shareList__item"><a class="shareList__link icon-hatebu"
+                                    href="http://b.hatena.ne.jp/entry/{{ request.scheme }}://{{ request.get_host }}{% url 'shop:detail' object.id %}"
+                                    target="_blank" title="はてなブックマーク"></a></li>
+                            <li class="shareList__item">
+                                <div class="line-it-button" data-lang="ja" data-type="share-b" data-ver="3"
+                                    data-url="{{ request.scheme }}://{{ request.get_host }}{% url 'shop:detail' object.id %}"
+                                    data-color="default" data-size="small" data-count="false" style="display: none;">
+                                </div>
+                            </li>
+                            <script src="https://d.line-scdn.net/r/web/social-plugin/js/thirdparty/loader.min.js"
+                                async="async" defer="defer"></script>
+                        </ul>
+
+                        <!-- レビューの追加 -->
+                        <section id="add-review">
+                            <div class="row">
+                                <!--レビュー情報を格納するrow-->
+                                <div class="col-12">
+                                    <h3 class="text-center">レビュー</h3>
+                                    <h4>あなたのレビューを書いてください！</h4>
+                                    {% if user.is_authenticated %}
+                                    <form class="login-form" action="" method="POST">
+                                        {{ review_form.non_field_errors }}
+                                        <div class="evaluation" style="float:left;">
+                                            <input id="score1" type="radio" name="score" value="5" />
+                                            <label for="score1"><span class="text">最高</span>★</label>
+                                            <input id="score2" type="radio" name="score" value="4" />
+                                            <label for="score2"><span class="text">良い</span>★</label>
+                                            <input id="score3" type="radio" name="score" value="3" />
+                                            <label for="score3"><span class="text">普通</span>★</label>
+                                            <input id="score4" type="radio" name="score" value="2" />
+                                            <label for="score4"><span class="text">悪い</span>★</label>
+                                            <input id="score5" type="radio" name="score" value="1" />
+                                            <label for="score5"><span class="text">最悪</span>★</label>
+                                        </div>
+                                        <br><br><br>
+                                        <label for="comment">上の星マークを選択してからコメントをご記入ください。</label>
+                                        <div class="form-group" type="text">{{ review_form.comment }}</div>
+                                        {% csrf_token %}
+                                        <br>
+                                        <button type="submit" class="btn btn-secondary">投稿する</button>
+
+                                    </form>
+                                    {% else %}
+                                    <p>レビューコメントを残すにはログインが必要です。</p>
+                                    <br>
+                                    <a class="btn btn-primary" href="{% url 'accounts:signup' %}">新規登録</a>
+                                    <a class="btn btn-info" href="{% url 'login' %}">ログイン</a>
+                                    {% endif %}
+
+                                        </div>
+                                    </div>
+
+                        </section>
+                        <!-- レビューを追加　ここまで -->
+
+                    </div>
+
+                </div><!-- /col-8 -->
+
+                <!-- サイドバー -->
+                <div class="col-lg-4 sidebar px-4">
+
+                    <aside class="shop-info">
+                        <p class="tel text-center"><img
+                                src="{% static 'image/ico-tel.svg' %}" />{% if object.shop_tel %}{{ object.shop_tel}}{% else %}未設定{% endif %}
+                        </p>
+
+                        <p id="address-side">〒{{ object.zipcode }}<br />{{ object.pref }}{{ object.address }}</p>
+                    </aside>
+
+
+                    {% include 'sidebar/search_box.html' %}
+
+
+                    <aside class="owners_profile">
+                        {% include 'sidebar/owner_box.html' %}
+                    </aside>
+
+                    <aside class="p-0">
+                        {% if object.owner.username != 'admin' %}
+                        <h3 class="line">このオーナーのショップ</h3>
+                        {% for item in users_shop_list %}
+                        <ul class="shop_list">
+                            {% include 'sidebar/shop_list_side.html' %}
+                        </ul>
+                        {% endfor %}
+                        {% endif %}
+                    </aside>
+
+                    <aside>
+                        {% if object.owner == request.user %}
+                        <br>
+                        <div class="card-info text-center">
+                            <p>このShopの操作</p>
+                            <a class="btn btn-info btn-sm" href="{% url 'shop:shop_update' object.name %}">編集</a>
+                            <a class="btn btn-danger btn-sm" href="{% url 'shop:shop_delete' object.name %}">削除</a>
+                        </div>
+                        {% endif %}
+                    </aside>
+                    <aside>
+                    </aside>
+
+                    <aside class="area_shop p-0">
+                        <h3 class="line">{{ object.pref }}のショップ</h3>
+                        <ul class="shop_list">
+                            {% for item in pref_shop_list %}
+                            {% include 'sidebar/shop_list_side.html' %}
+                            {% endfor %}
+                        </ul>
+
+                        <p class="text-right"><a href="{% url 'shop:pref_shop_list' object.pref %}"
+                                class="arw-r">{{ object.pref }}のショップをもっとみる</a></p>
+                    </aside>
+
+                    <figure class="ad">
+                        <img src="https://via.placeholder.com/800" />
+                    </figure>
+
+                    <figure class="ad">
+                        <img src="https://via.placeholder.com/800" />
+                    </figure>
+
+                </div>
+            </div>
+
+
+    </div>
+
+
+    </div>
+    </section>
+    </div>
+</main>
+
+</div>
+<!--container-->
+</section>
+{% endblock contents %}

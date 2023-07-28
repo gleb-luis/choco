@@ -1,0 +1,124 @@
+{% extends "base/app.html" %}
+{% load static %}
+
+{% block head %}
+<title>{{ object.shop.name }}のレビュー｜{{ request.site.name }}</title>
+<meta name="description" content="{{ request.site.sitedetail.description }}">
+
+<!-- Custom CSS -->
+<link rel="stylesheet" href="{% static 'css/share-button.css' %}">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,900">
+<link rel="stylesheet" href="{% static 'css/shop-detail.css' %}">
+<link rel="stylesheet" href="{% static 'css/review.css' %}">
+<link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+
+{% endblock %}
+
+{% block contents %}
+
+
+
+<!-- ShopHeader -->
+<header class="shop-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-8">
+                <h1>{{ object.shop.name }}</h1>
+                {% for tag in object.shop.tag.all %}
+                <span class="badge badge-primary">{{tag.name}}</span>
+                {% endfor %}
+
+                {% if not object.shop.get_review_count == 0 %}
+                <div class="rating-wrap">
+                    <div class="star-rating">
+                        <div class="star-rating-front" style="width: {{ shop.average_rate }}%;">★★★★★</div>
+                        <div class="star-rating-back">★★★★★</div>
+                    </div>
+                    <span class="vote-amount">{{ object.shop.get_average_score|floatformat:1 }}</span>
+                    <a href="#nav-review" data-toggle="tab" aria-controls="nav-review" aria-selected="false"
+                        id="nav-review-tab"><img
+                            src="{% static 'image/ico-comment.svg' %}" /><strong>{{ object.shop.get_review_count }}</strong>件のレビューコメント</a>
+                </div>
+                <br>
+                {% else %}
+                <p class="text-left">まだレビューはありません。<a href="#add-review">最初のレビューをお願いします！</a></p>
+                {% endif %}
+
+            </div>
+            <div class="col-12 col-lg-4 text-center">
+
+                <div class="fav-box">
+                    <ul class="list-inline">
+                        <li class="list-inline-item px-4"><span
+                                class="number">{{ object.shop.get_like_count }}</span>お気に入り
+                        </li>
+                        <li class="list-inline-item px-4"><span class="number">{{ object.shop.views }}</span>views</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+</header>
+
+<main class="main-content shop_detail">
+    <div class="container">
+        <section class="p-0">
+            <div class="row">
+
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link" id="nav-shoptop-tab"
+                            href="{% url 'shop:detail' object.shop.name %}#nav-shoptop" role="tab"
+                            aria-controls="nav-shoptop" aria-selected="false">
+                            <img src="{% static 'image/ico-shop.svg' %}">店舗トップ</a>
+                        <a class="nav-item nav-link" id="nav-ownerscolumn-tab"
+                            href="{% url 'shop:detail' object.shop.name %}#nav-ownerscolumn" role="tab"
+                            aria-controls="nav-ownerscolumn" aria-selected="false">
+                            <img src="{% static 'image/ico-ownerscolumn.svg' %}">オーナーズコラム</a>
+                        <a class="nav-item nav-link active" id="nav-review-tab" data-toggle="tab" href="#nav-review"
+                            role="tab" aria-controls="nav-review" aria-selected="true">
+                            <img src="{% static 'image/ico-review.svg' %}">レビューコメント</a>
+                    </div>
+                </nav>
+            </div>
+        </section>
+
+        <section id="add-review">
+            <div class="row">
+                <!--レビュー情報を格納するrow-->
+                <div class="col-lg-8">
+                    <h3 class="text-center">レビューの削除</h3>
+                    <p>店舗名：{{ object.shop }}
+                        <br>スコア：{{object.score}}
+                        <br>コメント：{{object.comment}}
+                        <br>投稿日：{{object.created_at.date}}
+                    </p>
+                    <p>を削除してもよろしいですか？</p>
+                    <form method="post">
+                        <button class="btn btn-secondary">このレビューを削除する</button>
+                        <a href="javascript:void(0);" onclick="window.history.back();"
+                            class="btn btn-primary mx-auto">キャンセル</a>
+                        {% csrf_token %}
+                    </form>
+                </div>
+                <!-- サイドバー -->
+                <div class="col-lg-4 sidebar px-4">
+
+
+                    {% include 'sidebar/search_box.html' %}
+
+                    <figure class="ad">
+                        <img src="https://via.placeholder.com/800" />
+                    </figure>
+                    <figure class="ad">
+                        <img src="https://via.placeholder.com/800" />
+                    </figure>
+
+                </div>
+
+            </div>
+        </section>
+        <!-- レビューを追加　ここまで -->
+    </div>
+</main>
+{% endblock contents %}

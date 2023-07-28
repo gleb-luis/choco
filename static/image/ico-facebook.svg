@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="23" height="22.86" viewBox="0 0 23 22.86">
+  <defs>
+    <clipPath id="clip-path">
+      <rect width="23" height="22.86" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="リピートグリッド_119" data-name="リピートグリッド 119" clip-path="url(#clip-path)">
+    <g transform="translate(-831.218 -906.86)">
+      <path id="パス_25176" data-name="パス 25176" d="M5424.027,587.119a11.5,11.5,0,1,0-13.3,11.36v-8.036h-2.92v-3.324h2.92v-2.534c0-2.882,1.717-4.474,4.344-4.474a17.652,17.652,0,0,1,2.574.225v2.83h-1.45a1.662,1.662,0,0,0-1.874,1.8v2.157h3.189l-.51,3.324h-2.679v8.036A11.5,11.5,0,0,0,5424.027,587.119Z" transform="translate(-4569.809 331.241)" fill="#3c5a97"/>
+    </g>
+  </g>
+</svg>

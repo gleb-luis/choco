@@ -1,0 +1,20 @@
+{% for item in column_list %}
+<!-- BEGIN loop -->
+<div class="col-lg-4 col-12">
+    <div class="card">
+        {% if item.thumbnail %}
+        <figure class="card-image" style="background-image: url('{{ item.thumbnail.url }}');">
+        {% else %}
+        <figure class="card-image" style="background-image: url('{{ request.site.imagesetting.column_default_thumbnail.url }}');">
+        {% endif %}
+        <span class="tag tag-view"><i class="far fa-eye"></i> {{ item.views }} Views</span>
+        </figure>
+
+        <div class="p-4">
+            <h3><a href="{% url 'column:detail' item.id %}" style="text-decoration: none!important;" class="stretched-link">{{ item.title }}</a></h3>
+            <p>{{ item.content | safe | truncatechars_html:55 }}</p>
+            <p class="post-meta text-right m-0">by {% if item.author.nickname %}{{item.author.nickname}}{% else %}{{item.author}}{% endif %}({{ item.created_at.date }})</p>
+        </div>
+    </div>
+</div><!-- END loop -->
+{% endfor %}

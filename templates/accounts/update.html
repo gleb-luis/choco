@@ -1,0 +1,88 @@
+{% extends 'base/app.html' %}
+{% block head %}
+<title>ユーザ情報編集｜{{ request.site.name }}</title>
+<meta name="description" content="{{ request.site.sitedetail.description }}">
+{% endblock %}
+
+{% block contents %}
+<section>
+    <div class="container no-masthead">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="section-title">{{user.username}} さんの情報を編集</h2>
+            </div>
+        </div>
+        
+        <form action="{% url 'accounts:update' user.username %}" method="post" enctype="multipart/form-data">
+            <div class="row">
+                {% csrf_token %}
+                <div class="col-md-4">
+                    <h4>ニックネーム</h4>
+                    <input type="text" class="form-control" name="nickname" value="{{object.nickname}}">
+                    <small>レビューを書いた場合に表示されます。<br><br></small>
+                    <div class="form-group">
+                        <h4>プロフィール</h4>
+                        <textarea class="form-control" name="profile" rows="5">{{object.profile}}</textarea>
+                        {% if form.profile.errors %}
+                        <div class="alert alert-danger">
+                            {{ form.profile.errors }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    <h4>メールアドレス</h4>
+                    <input type="email" class="form-control" name="email" value="{{object.email}}">
+                    <small>メールアドレスは公開されません。パスワード再設定時に必要です。</small>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <h4>Facebook URL</h4>
+                        <input type="text" class="form-control" name="fb" value="{{object.fb}}">
+                        <small>(例 : https://www.facebook.com/chocofan/ )</small>
+
+                        <br><br>
+                        <h4>Twitter URL</h4>
+                        <input type="text" class="form-control" name="tw" value="{{object.tw}}">
+                        <small>(例 : https://twitter.com/chocofan )</small>
+
+                        <br><br>
+                        <h4>Instagram URL</h4>
+                        <input type="text" class="form-control" name="insta" value="{{object.insta}}">
+                        <small>(例 : https://www.instagram.com/p/B0cESLgBnZQ/ )</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h4>アイコン</h4>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" name="icon" id="icon">
+                        <label class="custom-file-label" for="customFile">ファイルを選んでください</label>
+                    </div>
+                    {% if form.icon.errors %}
+                    <div class="alert alert-danger">
+                        {{ form.icon.errors }}
+                    </div>
+                    {% endif %}
+                    <!-- <br><br>
+                    <div class="imagePreview"></div> -->
+                    <br><br>
+                    {% if user.icon %}
+                        <p>只今のアイコン</p>
+                        <img src="{{object.icon.url}}" width="100%" class="img-thumbnail rounded-circle" style="width: 150px; height:150px;">
+                    {% endif %}
+
+                    <!-- <label type="file" class="custom-file-input" for="{{ form.id_for_label }}">{{ form.label_tag }}</label>
+                    {{ form.icon }}
+                    {{ form.errors }}          -->
+                </div>
+
+
+
+            </div>
+
+            <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-secondary">更新</button><span>　</span>
+                    <a href="javascript:void(0);" onclick="window.history.back();" class="btn btn-primary">戻る</a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

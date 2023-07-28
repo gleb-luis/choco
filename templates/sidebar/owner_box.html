@@ -1,0 +1,52 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/user-box.css' %}">
+
+
+    {% if object.owner.username == 'admin' %}
+    <h3><span>このショップの</span><span>オーナー様はこちら</span></h3>
+    {% if object.owner.icon %}
+    <img class="rounded-circle avatar" src="{{object.owner.icon.url}}" width="100%">
+    {% else %}
+    <br>
+    {% endif %}
+
+    <p class="text-justify">お店のニュースやイベント、コラムなどの情報をいつでも無料で掲載・発信する事ができます。</p>
+    <p class="text-right">
+        <a href="{% url 'company:contact' %}" class="arw-r">こちらよりお問い合わせください</a>
+    </p>
+
+    <!-- オーナー登録への導線を上記の問い合わせに統合 -->
+    <!-- <a class="btn btn-secondary btn-sm btn-block" href="{% url 'accounts:signup' %}">ユーザー登録して情報を編集</a>
+    <a class="btn btn-secondary btn-sm btn-block" href="{% url 'login' %}">ログインして情報を編集</a> -->
+
+    {% else %}
+
+
+        <div class="avatar">
+            {% if object.owner.icon %}
+            <img class="rounded-circle avatar" src="{{object.owner.icon.url}}">
+            {% else %}
+            <img class="rounded-circle avatar" src="{{ request.site.imagesetting.shop_default_thumbnail.url }}">
+            {% endif %}
+        </div>
+        <div class="info">
+            <div class="title">
+                <a href="{% url 'accounts:detail' object.owner %}">{% if object.owner.nickname %}{{object.owner.nickname}}{% else %}{{object.owner.username}}{% endif %}</a>
+            </div>
+            <div class="desc">{{ object.owner.profile|safe}}</div>
+        </div>
+        <div class="bottom">
+            <ul class="box_footer_ul">
+                {% if object.owner.fb %}
+                <li><a href="{{ object.owner.fb }}" target="_blank" style="color:#fff; background-color:#3C5A99;"><i class="fab fa-facebook-f"></i></a></li>
+                {% endif %}
+                {% if object.owner.tw %}
+                <li><a href="{{ object.owner.tw }}" target="_blank" style="color:#fff; background-color:#1DA1F2;"><i class="fab fa-twitter"></i></a></li>
+                {% endif %}
+                {% if object.owner.insta %}
+                <li><a href="{{ object.owner.insta }}" target="_blank" style="color:#fff; background-color:#CF2E92;"><i class="fab fa-instagram"></i></a></li>
+                {% endif %}
+            </ul>
+        </div>
+        {% if object.owner != request.user %}<a class="btn btn-sm btn-primary" href="{% url 'accounts:follow' object.owner.id %}">フォロー</a>{% endif %}
+    {% endif %}

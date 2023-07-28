@@ -1,0 +1,140 @@
+{% extends "base/app.html" %}
+{% load static %}
+
+{% block head %}
+<title>ユーザ情報｜{{ request.site.name }}</title>
+<meta name="description" content="{{ request.site.sitedetail.description }}">
+
+<!-- Custom CSS -->
+<link rel="stylesheet" href="{% static 'css/column-index.css' %}">
+<link rel="stylesheet" href="{% static 'css/user-detail.css' %}">
+<link rel="stylesheet" href="{% static 'css/shop-index.css' %}">
+<script src="{% static 'js/shop-index.js' %}"></script>
+{% endblock %}
+
+{% block contents %}
+<section>
+    <div class="container album bg-white no-masthead">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="section-title">{% if this_user.nickname %}{{this_user.nickname}}{% else %}{{this_user.username}}{% endif %}さんのページ</h2>
+            </div>
+        </div>
+        <div class="row d-flex align-items-center">
+            <div class="col-md-2">
+                {% if this_user.icon %}
+                    <img class="img-thumbnail rounded-circle" src="{{this_user.icon.url}}" style="width: 150px; height: 150px;">
+                {% else %}
+                    <img class="img-thumbnail rounded-circle" src="{% static 'image/ico-owneravatar.svg' %}">
+                    <p>アイコンはありません。</p>
+                {% endif %}
+            </div>
+            <div class="col-md-4">
+                {% if this_user.nickname %}
+                <br><br>
+                <h5>{{this_user.nickname}}</h5>
+                {% else %}
+                <h5>{{this_user.username}}</h5>
+                {% endif %}
+                <p>{{ this_user.profile }}</p>
+            </div>
+            <div class="col-md-4 sns-links">
+                {% if this_user.fb %}
+                    <a href="{{ this_user.fb }}" class="btn btn-fb btn-block text-white" target="_blank" style="width: 160px;">Facebook</a>
+                {% endif %}
+                {% if this_user.tw %}
+                    <a href="{{ this_user.tw }}" class="btn btn-tw btn-block text-white" target="_blank" style="width: 160px;">Twitter</a>
+                {% endif %}
+                {% if this_user.insta %}
+                    <a href="{{ this_user.insta }}" class="btn btn-insta btn-block text-white" target="_blank" style="width: 160px;">Instagram</a>
+                {% endif %}
+            </div>
+            <div class="col-md-2">
+                {% if user == request.user %}
+                <a href="{% url 'accounts:update' this_user.username %}" class="btn btn-primary">
+                    <i class="fas fa-cog"></i> 編集
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- コラム執筆者の場合 -->
+{% if column_list %}
+<section class="chocolate-columns pt-0">
+    <div class="container">
+        <div class="section-header">
+            <h3>{% if this_user.nickname %}{{this_user.nickname}}{% else %}{{this_user.username}}{% endif %}さんのコラム</h3>
+        </div>
+
+        <div class="row">
+            {% include 'column/column_list_part.html' %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% if shop_list %}
+<section class="chocolate-shop pt-0">
+    <div class="container">
+
+        <div class="section-header">
+            <h3>{% if this_user.nickname %}{{this_user.nickname}}{% else %}{{this_user.username}}{% endif %}さんの店舗</h3>
+        </div>
+
+        <div class="row slide1">
+            {% include 'shop/shop_list_part.html' %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- LIKEした投稿 -->
+<!-- <section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="section-title">{{this_user.username}}'s LIKE</h2>
+            </div>
+        </div>
+        <div class="row">
+            {% if liked_post %}
+                {% for item in liked_post %}
+                <div class="col-md-2">
+                        <a href="{% url 'posts:detail' item.post.id %}"><img class="photo-img" src="{{ item.post.picture.url }}" style="height:120px; width:120px;"></a>
+                    </div>
+                {% endfor %}
+            {% else %}
+            <p>LIKEした投稿はまだありません。</p>
+            {% endif %}
+        </div>
+    </div>
+</section> -->
+
+<!-- FollowしているUser -->
+<!-- <hr>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="section-title">Follow中のユーザー</h2>
+            </div>
+        </div>
+        <div class="row">
+            {% if this_user.get_following_user %}
+                {% for item in this_user.get_following_user %}
+                <div class="col-md-2">
+                    <P>{{ item.get_following_user }}</P>
+
+                </div>
+                {% endfor %}
+            {% else %}
+            <p>FOLLOW中のユーザーはまだいません。</p>
+            {% endif %}
+        </div>
+    </div>
+</section> -->
+
+<!-- 店舗オーナーの場合 -->
+{% endblock %}

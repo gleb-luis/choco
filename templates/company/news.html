@@ -1,0 +1,42 @@
+{% extends "base/app.html" %}
+{% load static %}
+
+{% block head %}
+<title>News｜{{ request.site.name }}</title>
+<meta name="description" content="{{ request.site.sitedetail.description }}">
+{% endblock %}
+
+{% block contents %}
+<div class="container no-masthead">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2 class="section-title">News</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-10 mx-auto">
+
+            {% if news_list %}
+            <ul>
+                {% for item in news_list %}
+                <li class="row">
+                    <div class="col-md-3">{{ item.public_date.date }}</div>
+                    <div class="col-md-9"><a href="{% url 'company:news_detail' item.pk %}">{{ item.title }}</a>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>               
+            {% else %}
+            <p>まだありません。</p>
+            {% endif %}
+
+            {% include 'base/pagination.html' %}
+
+        </div>
+    </div>
+</div>
+
+{% endblock contents %}
+
+{% block foot %}
+{% endblock %}

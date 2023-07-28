@@ -1,0 +1,8 @@
+/* サイドバー共通のCSS */
+
+h4.sidebar {
+    padding: 0.5em;/*文字周りの余白*/
+    background: #fafafa;/*背景色*/
+    border-top: solid 2px #CC1E1F;/*下線*/
+    border-bottom: solid 2px #CC1E1F;/*下線*/
+  }

@@ -1,0 +1,4 @@
+User-agent: Mediapartners-Google
+Disallow: /admin/
+Disallow: /accounts/
+Sitemap: https://choco.fan/sitemap

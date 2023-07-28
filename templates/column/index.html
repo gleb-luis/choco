@@ -1,0 +1,32 @@
+{% extends "base/app.html" %}
+{% load static %}
+
+{% block head %}
+<title>コラム一覧｜{{ request.site.name }}</title>
+<meta name="description" content="{{ request.site.sitedetail.description }}">
+
+<!-- Custom CSS -->
+<link rel="stylesheet" href="{% static 'css/column-index.css' %}">
+<link rel="stylesheet" href="{% static 'css/shop-index.css' %}">
+
+{% endblock %}
+
+{% block contents %}
+<section>
+    <div class="container no-masthead">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="section-title mb-4">コラム一覧</h2>
+            </div>
+        </div>
+        <div class="row display-flex">
+            {% include 'column/column_list_part.html' %}
+        </div>
+        {% include 'base/pagination.html' %}
+    </div>
+</section>
+
+{% endblock contents %}
+
+{% block foot %}
+{% endblock %}

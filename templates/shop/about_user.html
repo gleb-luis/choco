@@ -1,0 +1,293 @@
+{% extends "base/app.html" %}
+{% load static %}
+{% load custom_filter %}
+
+{% block head %}
+<title>{{ request.site.sitedetail.title }}｜{{ request.site.name }}</title>
+<meta name="description" content="{{ request.site.sitedetail.description }}">
+<!-- Custom CSS -->
+<link rel="stylesheet" href="{% static 'css/column-index.css' %}">
+<link rel="stylesheet" href="{% static 'css/shop-index.css' %}">
+<link rel="stylesheet" href="{% static 'css/shop-recommend.css' %}">
+<script src="{% static 'js/shop-index.js' %}"></script>
+
+{% endblock %}
+
+{% block contents %}
+
+
+
+<!-- BEGIN Masthead -->
+  <header class="masthead masthead-small text-white text-center d-flex justify-content-center align-items-center" style="background-image: url('{% static 'image/AdobeStock_1701680021000.jpg' %}');">
+	<h1>choco.fanとは</h1>
+  </header>
+
+    <main class="main-content">
+        <div class="container">
+
+
+            <section>
+
+                <div class="main-header">
+                    <p class="intro">Welcome</p>
+                    <h2>チョコレートの世界にようこそ！</h2>
+                    <p>Choco.fanはチョコレートファンのための美味しい情報サイトです。</p>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="bg-orange mb-3">
+                            <img src="{% static 'image/illust-sekai-1@3x.png' %}" class="w-100" />
+                        </div>
+                        <h3 class="h4 text-lg-center nobr-sm">こだわりのチョコレート<br />ショップを探せる</h3>
+                        <p>フリーワード・地域・特徴などから、こだわりのチョコレートを売っている素敵なお店を探すことができます。</p>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="bg-orange mb-3">
+                            <img src="{%static 'image/illust-sekai-2@3x.png' %}" class="w-100"  />
+                        </div>
+                        <h3 class="h4 text-lg-center nobr-sm">チョコレートの知識が<br />深まるコラム満載</h3>
+                        <p>わたしたちの身近な存在のチョコレートですが意外なチョコレートの真実や知らないことがたくさんあるかも！</p>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="bg-orange mb-3">
+                            <img src="{%static 'image/illust-sekai-3@3x.png' %}" class="w-100"  />
+                        </div>
+                        <h3 class="h4 text-lg-center nobr-sm">ショップオーナーの<br />コラムが読める</h3>
+                        <p>ここでしか読めない、ショップオーナーのコラムを掲載。</p>
+                    </div>
+                </div>
+
+            </section>
+
+            <hr class="line">
+
+            <section>
+
+                <div class="main-header">
+                    <p class="intro">Delicious & Happy !!</p>
+                    <h2>みんながハッピーになるチョコレートの世界</h2>
+                    <p class="nobr-sm">知識をもってこだわりのチョコレートを買うことは、<br />
+      買う人も、ギフトとして受け取る人も、チョコレートを作る人も、<br />
+      さらに遡って、作る機械を作る人も、カカオ豆を選ぶ人、カカオ豆を生産する人。<br />
+      みんながハッピーになるんです。</p>
+
+                        <img src="{%static 'image/imgheader-about.png' %}" class="w-75" />
+                </div>
+
+
+                <div class="box">
+                    <div class="row">
+
+                        <div class="col-lg-12 text-center mb-3">
+                             <h3>Bean To Bar（ビーン・トゥー・バー）チョコレートとは</h3>
+                        </div>
+
+                        <div class="col-lg-5">
+                            <img src="{%static 'image/img-about-beantobar.jpg' %}" class="w-100" />
+                        </div>
+
+                        <div class="col-lg-7">
+
+
+                            <p class="text-justify">Bean to Bar（ビーン・トゥ・バー）とは、カカオの購買から商品化までを一貫してチョコレートの製造を行うことをいいます。
+  農家が搾取され、安価で大量生産されていたチョコレートの製造を見直し、カカオ豆の入手から、焙煎(ROASTING)、皮と実の選別(WINNOWING)、砂糖などと混ぜてチョコレートとしてペースト化し(メランジング)、熟成(BLOCKING)、過熱と冷却（TEMPERING）を一貫して行います。
+  Bean to Bar（ビーン・トゥ・バー）では良質なカカオ豆を求めてショコラティエが生産者と直接取引することがほとんどで、
+  近い概念を持つキーワードに「フェアトレード（公正な取引）」があります。</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="box">
+                    <div class="row">
+
+                        <div class="col-lg-12 text-center mb-3">
+                             <h3>チョコレートを買うことが「SDG Goals」の達成につながります</h3>
+                        </div>
+
+                        <div class="col-lg-12 text-center mb-3">
+                        <p class="text-justify">SDGsとは「Sustainable Development Goals（持続可能な開発目標）」の略称です。<br />
+  SDGsは2015年9月の国連サミットで採択されたもので、国連加盟193か国が2016年から2030年の15年間で達成するために掲げた目標で、全部で17個あります。<br />
+  Bean To Barや、フェアトレード商品を選ぶことでSDGsの目標1「貧困をなくそう！」のほか、目標2「飢餓ゼロ」、目標5「ジェンダー平等」、目標8「働きがい・経済成長」、目標12「つくる責任・つかう責任」、目標13「気候変動」、目標16「平和と公正」、目標17「パートナーシップ」の達成につながります。</p>				</div>
+
+                      <div class="col-lg-12 text-center mb-3">
+                      <h4>BeanToBarやフェアトレードチョコレートを買うことで達成する、SDGsの目標<h4>
+
+
+                      <div class="row text-left mt-5">
+
+                          <div class="col-12 col-md-4">
+                              <div class="media">
+                                  <img class="mr-3 mb-3" src="{%static 'image/sdgs01.png' %}" alt="Generic placeholder image">
+                                  <div class="media-body">
+                                  <h5 class="mt-0">1. 貧困をなくそう</h5>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="col-12 col-md-4">
+                              <div class="media">
+                                  <img class="mr-3 mb-3" src="{%static 'image/sdgs02.png' %}" alt="Generic placeholder image">
+                                  <div class="media-body">
+                                  <h5 class="mt-0">2. 飢餓をゼロに</h5>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="col-12 col-md-4">
+                              <div class="media">
+                                  <img class="mr-3 mb-3" src="{%static 'image/sdgs05.png' %}" alt="Generic placeholder image">
+                                  <div class="media-body">
+                                  <h5 class="mt-0">3. ジェンダー平等を<br />実現しよう</h5>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="col-12 col-md-4">
+                              <div class="media">
+                                  <img class="mr-3 mb-3" src="{%static 'image/sdgs08.png' %}" alt="Generic placeholder image">
+                                  <div class="media-body">
+                                  <h5 class="mt-0">8. 働きがいも<br />経済成長も</h5>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="col-12 col-md-4">
+                              <div class="media">
+                                  <img class="mr-3 mb-3" src="{%static 'image/sdgs12.png' %}" alt="Generic placeholder image">
+                                  <div class="media-body">
+                                  <h5 class="mt-0">12. つくる責任<br />つかう責任</h5>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="col-12 col-md-4">
+                              <div class="media">
+                                  <img class="mr-3 mb-3" src="{%static 'image/sdgs13.png' %}" alt="Generic placeholder image">
+                                  <div class="media-body">
+                                  <h5 class="mt-0">13. 気候変動に<br />具体的な対策を</h5>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="col-12 col-md-4">
+                              <div class="media">
+                                  <img class="mr-3 mb-3" src="{%static 'image/sdgs16.png' %}" alt="Generic placeholder image">
+                                  <div class="media-body">
+                                  <h5 class="mt-0">16. 平和と公正を<br />すべての人に</h5>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="col-12 col-md-4">
+                              <div class="media">
+                                  <img class="mr-3 mb-3" src="{%static 'image/sdgs17.png' %}" alt="Generic placeholder image">
+                                  <div class="media-body">
+                                  <h5 class="mt-0">17. パートナーシップで<br />目標を達成しよう</h5>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      </div>
+                    </div>
+                </div>
+
+
+
+                <div class="box">
+                    <div class="row">
+
+                        <div class="col-lg-12 text-center mb-3">
+                             <h3>チョコレートを買うことで、環境問題にも貢献できます</h3>
+                        </div>
+
+                        <div class="col-lg-5">
+                            <img src="{%static 'image/img-agroforestry.jpg' %}" class="w-100" />
+                        </div>
+
+                        <div class="col-lg-7">
+                            <p class="text-justify">アグロフォレストリーとは、Agriculture（農業）とForestry（林業）を組み合わせた言葉で、JICAが移住を支援してきた日系移民の活躍、JICAの技術支援もあり、確立された、森をつくりながら農作する方法です。収穫期が異なるコショウやカカオなどの熱帯作物とマホガニーなどの樹木を混植することで、農業と森林の保護・再生の両方を可能になり、アマゾン地域の森林保全、住民の生計向上へ向けて大きく貢献しています。<br />
+                                チョコレートを購入することで、環境保全、所得向上、アグロフォレストリー作物の商品化など、環境問題に貢献する事ができます。</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="box">
+                    <div class="row">
+
+                        <div class="col-lg-12 text-center mb-3">
+                             <h3>チョコレートは発酵食品。健康効果も抜群</h3>
+                        </div>
+
+                        <div class="col-lg-5">
+                            <img src="{% static 'image/img-cacao01.jpg' %}" class="w-100" />
+                        </div>
+
+                        <div class="col-lg-7">
+                            <p class="text-justify">チョコレートは、カカオの実（カカオポッド）から取り出した甘く白い果肉（パルプ）と一緒に、バナナの葉で包んで発酵させたカカオ豆から作られます。
+  チョコレートに含まれるカカオマスポリフェノールの高い抗酸化作用など、健康効果に注目されており、食べて美味しく身体に嬉しい食品なのです。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="main-header">
+                    <p class="intro">Let’s Go To Chocolate World !!</p>
+                    <h2>さあ、チョコレートの世界へ！</h2>
+                    <p class="nobr-sm">知識と意思を持って、チョコレートの世界を楽しんでみよう！</p>
+                </div>
+
+                <img src="{% static 'image/imgfooter-about.png' %}" class="w-100"/>
+
+                <div class="row mt-5">
+
+                    <div class="col-12 col-md-4">
+                        <a href="{% url 'shop:shop_list' %}" class="btn btn-primary btn-block arw-r mb-2">チョコレートショップを探す</a>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <a href="{% url 'column:index' %}" class="btn btn-primary btn-block arw-r mb-2">チョコレートコラムを読む</a>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <a href="{% url 'accounts:signup' %}" class="btn btn-secondary btn-block arw-r mb-2">新規会員登録</a>
+                    </div>
+                </div>
+            </section>
+
+
+            <hr class="line">
+
+
+            <section>
+                <div class="main-header">
+                    <p class="intro">About Us</p>
+                    <h2>運営会社情報</h2>
+                    <p class="nobr-sm">チョコレートファンのための美味しい情報サイト「Choco.fan」は、<br />
+                        株式会社イースが運営しています。</p>
+                </div>
+
+            <div class="d-flex justify-content-center">
+                <a href="{% url 'company:about' %}" class="btn btn-primary mx-auto d-block arw-r">会社情報</a>
+            </div>
+            </section>
+
+
+
+        </div>
+    </main>
+
+
+
+
+
+{% endblock contents %}
+
+{% block foot %}
+{% endblock %}

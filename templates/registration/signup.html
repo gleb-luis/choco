@@ -1,0 +1,56 @@
+{% extends "base/app.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block head %}
+<title>ユーザー登録｜{{ request.site.name }}</title>
+<meta name="description" content="{{ request.site.sitedetail.description }}">
+{% endblock %}
+
+{% block contents %}
+
+
+<main class="main-content signup">
+    <div class="container">
+        <section class="pb-0">
+            <div class="row">
+
+                <div class="col-12 col-md-6 mb-3">
+                    <div class="main-header">
+                        <p class="intro">Welcome To Choco.fan</p>
+                        <h2>レビューを書いて<br />
+                            チョコレートショップを応援しよう</h2>
+                        <p>これから様々な機能が追加される予定です。<br />
+                            ぜひ登録して、私たちといっしょに<br />
+                            チョコレートの世界を盛り上げましょう！</p>
+
+                        <img src="{% static 'image/img-truffe@2x.png' %}" class="mx-auto pt-2" />
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <a href="/user/about" class="btn btn-primary mx-auto d-block arw-r">Choco.fanについてくわしくはこちら</a>
+                    </div>
+                </div>
+
+
+                <div class="col-12 col-md-6">
+                    <div class="box bg-white text-center mb-0 bb-none">
+
+                        <h3>ソーシャルアカウントでログイン</h3>
+
+                    </div>
+
+                    <div class="box dark-lb text-center bt-none">
+                        <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-primary btn-block btn-sns btn-google arw-r">Googleアカウントでログイン</a>
+                        <!-- <a href="" class="btn btn-primary btn-block btn-sns btn-facebook arw-r">Facebookでログイン</a> -->
+                        <a href="{% url 'social:begin' 'twitter' %}" class="btn btn-primary btn-block btn-sns btn-twitter arw-r">Twitterでログイン</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+</main>
+
+
+
+{% endblock %}

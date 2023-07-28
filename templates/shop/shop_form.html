@@ -1,0 +1,91 @@
+<div class="row">
+    <div class="col-md-8 col-sm-12">
+        <div class="form-group">
+            <h3>店舗名</h3>
+            {{ form.name }}
+            <br>
+            <h3>店舗概要</h3>
+            {{ form.short_content }}
+            <br>
+            <help>一覧画面で表示されるときは、この「店舗概要」が表示されます。</help>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-12">
+        <div class="form-group">
+            <h3>サムネイル１</h3>
+            {{ form.thumbnail }}
+            <br>
+            <h3>サムネイル２</h3>
+            {{ form.thumbnail2 }}
+            <br>
+            <h3>サムネイル３</h3>
+            {{ form.thumbnail3 }}
+        </div>
+        
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3 col-sm-12">
+        <div class="form-group">
+            <h3>郵便番号</h3>
+            {{ form.zipcode }}
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-12">
+        <div class="form-group">
+            <h3>都道府県</h3>
+            {{ form.pref }}
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-12">
+        <div class="form-group">
+            <h3>住所</h3>
+            {{ form.address }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-sm-12">
+        <div class="form-group">
+            <h3>電話番号</h3>
+            {{ form.shop_tel }}
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-12">
+        <div class="form-group">
+            <h3>メールアドレス</h3>
+            {{ form.shop_email }}
+        </div>
+    </div>
+</div>
+
+<br>
+<div class="row">
+    <div class="col-md-8 col-sm-12">
+        <div class="form-group">
+            <h3>ショップ紹介文</h3>
+            {{ form.content }}
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-12">
+        <div class="form-group">
+            <h3>公式LINE</h3>
+            {{ form.shop_line}}
+            <small>LINE公式アカウントやLINE@アカウントのLINE IDを入力してください。</small>
+            <br>
+            <h3>公式サイトURL</h3>
+            {{ form.shop_url}}
+            <br>
+            <h3>Facebook URL</h3>
+            {{ form.shop_fb}}
+            <br>
+            <h3>Twitter URL</h3>
+            {{ form.shop_tw}}
+            <br>
+            <h3>Instagram URL</h3>
+            {{ form.shop_insta}}
+            <br>
+        </div>
+    </div>
+</div>

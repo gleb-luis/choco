@@ -1,0 +1,29 @@
+{% extends "base/app.html" %}
+
+{% block head %}
+<title>ショップ情報の更新｜{{ request.site.name }}</title>
+<meta name="description" content="{{ request.site.sitedetail.description }}">
+
+{% endblock %}
+
+{% block contents %}
+<div class="container no-masthead">
+    <br>
+    <div class="row">
+        <div class="col-lg-12">
+            <h2 class="section-title">ショップ情報の更新</h2>
+        </div>
+    </div>
+
+    <form id="shopform" action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% include 'shop/shop_form.html' %}
+        <div class="row">
+            <br>
+            <br>
+            <input type="submit" value="保存" class="btn bg-main">  
+            <a href="javascript:void(0);" onclick="window.history.back();" class="btn btn-outline-secondary">キャンセル</a>
+        </div>
+    </form> 
+</div>
+{% endblock contents %}

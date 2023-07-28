@@ -1,0 +1,16 @@
+{% extends 'base/app.html' %}
+{% load static %}
+
+{% block head %}
+<title>Bean to Bar|500 Server Error</title>
+<meta name="description" content="{{ request.site.sitedetail.description }}">
+{% endblock %}
+
+{% block content %}
+<section>
+    <div>
+        <p>予期しないエラーが発生しました。</p>
+        <a href="javascript:void(0);" onclick="window.history.back();" class="btn btn-outline-secondary">戻る</a>
+    </div>
+</section>
+{% endblock %}

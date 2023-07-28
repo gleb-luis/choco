@@ -1,0 +1,57 @@
+
+{% if post_list %}
+{% for post in post_list %}
+<div class="col-md-4">                    
+    <div class="card mb-5 box-shadow">
+    <a href="{% url 'posts:detail' post.pk %}"><img class="card-img-top" src="{{post.picture.url}}"></a>
+        <div class="card-body">
+            <p class="card-text">{{ post.text }}</p>
+            <small><i class="fas fa-flag"></i>　原産国： {{ post.country }}</small>
+            <br>
+            <small><i class="fas fa-utensil-spoon"></i>　テイスト： {{ post.taste }}</small>
+            <br>
+            <small><i class="fas fa-chart-pie"></i>　カカオ含有率： {{ post.cacao }}%</small>
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: {{ post.cacao }}%" aria-valuemax="100"></div>
+            </div>
+            <hr>
+            {% if post.get_review_count > 0 %}
+            <p>レビュー：{{ post.get_average_score|floatformat:1 }} / {{ post.get_review_count }}件</p>
+            {% else %}
+            <p>まだレビューはありません。</p>
+            {% endif %}
+            <hr>
+            {% if post.author == request.user %}
+                <a class="btn btn-info btn-sm" href="{% url 'posts:update' post.id %}">編集</a>
+                <a class="btn btn-danger btn-sm" href="{% url 'posts:delete' post.id %}">削除</a>
+            {% else %}
+                <a class="btn btn-sm btn-like" href="{% url 'posts:like' post.id %}"><i class="far fa-heart"></i> LIKE</a>
+            {% endif %}
+            
+            <p>（{{ post.get_like_count }} LIKEs 獲得）</p>
+            <hr>
+            <div class="d-flex justify-content-between align-items-center">
+            <small>{{ post.created_at }}</small>
+            <small class="text-muted">{{ post.views }} views</small>
+            </div>
+        </div>
+        <div class="card-footer">
+            {% if post.author.icon %}
+            <img src="{{ post.author.icon.url }}" class="timeline-icon">
+            <a href="{% url 'accounts:detail' post.author %}">@{{post.author.username }}</a>　{% if post.author != request.user %}<a class="btn btn-sm btn-follow" href="{% url 'accounts:follow' post.author.id %}">Follow</a>{% endif %}
+            {% else %}
+            <a href="{% url 'accounts:detail' post.author %}">@{{post.author.username }}</a>　{% if post.author != request.user %}<a class="btn btn-sm btn-follow" href="{% url 'accounts:follow' post.author.id %}">Follow</a>{% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% else %}
+<div class="col-6 offset-3 text-center">
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <p class="lead"><a href="{% url 'posts:create' %}">投稿</a>して他のユーザーに見つけてもらおう</p>
+        </div>
+    </div>
+</div>
+{% endif %}

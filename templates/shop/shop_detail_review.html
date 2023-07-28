@@ -1,0 +1,38 @@
+{% load static %}
+<h3>「{{ object.name }}」へのレビューコメント</h3>
+{% if review_list %}
+{% for item in review_list %}
+    <!-- BEGIN loop -->
+    <div class="card card-review">
+        <div class="title d-flex align-items-center">
+          {% if item.user.icon %}
+          <img src="{{item.user.icon.url}}" class="rounded-circle avatar">
+          {% else %}
+          <img src="{% static 'image/user_none.png' %}" class="rounded-circle avatar">                              
+          {% endif %}
+
+        <h4>{% if item.user.nickname %}{{item.user.nickname}}{% else %}{{item.user}}{% endif %} <small>さんのコメント</small></h4>
+        </div>
+        <div class="card-body">
+          <div class="rating-wrap">
+              <div class="star-rating">
+                  <div class="star-rating-front" style="width: {{ item.get_percent }}%;">★★★★★</div>
+                  <div class="star-rating-back">★★★★★</div>
+              </div>
+              <span class="vote-amount">{{ item.score|floatformat:0 }}</span>
+          </div>
+        <p>{{ item.comment }}</p>
+        <br>
+        {% if request.user == item.user %}
+        <a href="{% url 'shop:review_update' item.pk %}">編集</a>
+        <a href="{% url 'shop:review_delete' item.pk %}">削除</a>
+        {% endif %}
+        </div>
+    </div><!-- END loop -->
+    {% endfor %}
+    {% else %}
+    <p class="text-left">まだレビューはありません。<a href="#add-review">最初のレビューをお願いします！</a></p>
+    <br>
+{% endif %}
+
+<p class="text-right mt-2"><a href="#nav-review" class="arw-r" data-toggle="tab">すべてのレビューコメントを読む</a></p>

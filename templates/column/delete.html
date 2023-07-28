@@ -1,0 +1,32 @@
+{% extends "base/app.html" %}
+
+{% block head %}
+<title>コラム削除｜{{ request.site.name }}</title>
+<meta name="description" content="{{ request.site.sitedetail.description }}">
+{% endblock %}
+
+{% block contents %}
+<section>
+    <div class="container no-masthead">
+        <br>
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="section-title">Delete Column</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <H3>「<span class="text-primary">{{ object }}</span>」</H3>
+                <p>を削除してもよろしいですか？</p>
+                <p>一度削除したコラムは元に戻すことはできません。</p>
+                <form method="post">
+                    <button class="btn btn-danger">上記注意を点理解の上、このColumnを削除する</button>
+                    <a href="javascript:void(0);" onclick="window.history.back();" class="btn btn-outline-secondary">キャンセル</a>
+                    {% csrf_token %}
+                </form>
+                <br>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock contents %}
